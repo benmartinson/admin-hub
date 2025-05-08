@@ -1,45 +1,51 @@
-import { Authenticated, Unauthenticated, useConvexAuth } from "convex/react";
-import SignInForm from "./auth/SignInForm";
+import { useConvexAuth } from "convex/react";
 import UserProfile from "./auth/UserProfile";
 import LoadingSpinner from "./common/LoadingSpinner";
-import AppsList from "./apps/AppsList";
-import Sidebar from "./dashboard/Sidebar";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import DashboardPage from "./dashboard/DashboardPage";
+import SignInForm from "./auth/SignInForm";
+import Navbar from "./layout/Navbar";
 
 export default function App() {
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, isLoading } = useConvexAuth();
 
-  if (!isAuthenticated) {
+  if (isLoading) {
     return (
-      <>
-        <header className="sticky top-0 z-10 bg-light dark:bg-dark p-4 border-b-2 border-slate-200 dark:border-slate-800 flex justify-between items-center">
-          AdminHub
-          <UserProfile />
-        </header>
-        <main className="p-8 flex flex-col gap-16">
-          <LoadingSpinner />
-        </main>
-      </>
+      <main className="p-8 flex flex-col gap-16 items-center justify-center min-h-screen">
+        <LoadingSpinner />
+      </main>
     );
   }
 
   return (
-    <>
-      <header className="sticky top-0 z-10 bg-light dark:bg-dark p-4 border-b-2 border-slate-200 dark:border-slate-800 flex justify-between items-center">
-        AdminHub
-        <UserProfile />
-      </header>
-      <main className="flex">
-        <h1 className="text-4xl font-bold text-center"></h1>
-        <Authenticated>
-          <div className="flex gap-4">
-            <Sidebar />
-            <div></div>
-          </div>
-        </Authenticated>
-        <Unauthenticated>
-          <SignInForm />
-        </Unauthenticated>
-      </main>
-    </>
+    <BrowserRouter>
+      <div className="flex flex-col h-screen bg-white">
+        <Navbar />
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              !isAuthenticated ? <SignInForm /> : <Navigate to="/dashboard" />
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }

@@ -6,7 +6,7 @@ const SignInForm = () => {
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   return (
-    <div className="flex flex-col gap-8 w-96 mx-auto">
+    <div className="flex flex-col gap-8 w-96 mx-auto pt-16">
       <form
         className="flex flex-col gap-2"
         onSubmit={(e) => {

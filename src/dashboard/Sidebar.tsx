@@ -1,37 +1,40 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlay,
-  faExchangeAlt,
-  faDatabase,
-  faChartBar,
-  faCog,
-  faWrench,
-} from "@fortawesome/free-solid-svg-icons";
+import { navItems } from "@/constants";
+import classNames from "classnames";
 
-const Sidebar = () => {
-  const navItems = [
-    { name: "Playground", icon: faPlay },
-    { name: "Changes", icon: faExchangeAlt },
-    { name: "Data", icon: faDatabase },
-    { name: "Reports", icon: faChartBar },
-    { name: "Settings", icon: faCog },
-    { name: "Configuration", icon: faWrench },
-  ];
+const Sidebar = ({
+  selectedTab,
+  setSelectedTab,
+}: {
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
+}) => {
+  console.log(selectedTab);
+  const isSelected = (item: { name: string }) => selectedTab === item.name;
+  const listClasses = (item: { name: string }) =>
+    classNames("flex items-center py-3 px-0.5 cursor-pointer group", {
+      "text-black border-b-2 border-black": isSelected(item),
+      "text-slate-500 hover:border-b-2 hover:border-slate-300 hover:text-slate-500":
+        !isSelected(item),
+    });
+
+  const iconClasses = (item: { name: string }) =>
+    classNames("mr-2 w-5 h-5", {
+      "text-black": isSelected(item),
+      "text-slate-300 group-hover:text-slate-500": !isSelected(item),
+    });
 
   return (
-    <div className="w-64 bg-slate-800 text-slate-100 h-screen p-5 box-border font-sans">
-      <ul className="list-none p-0 m-0">
+    <div className="w-full py-4 font-sans ml-12">
+      <ul className="list-none p-0 m-0 flex justify-start items-center gap-8">
         {navItems.map((item) => (
           <li
             key={item.name}
-            className="flex items-center py-4 px-3 cursor-pointer rounded transition-colors duration-200 ease-in-out hover:bg-slate-700"
+            className={listClasses(item)}
+            onClick={() => setSelectedTab(item.name)}
           >
-            <FontAwesomeIcon
-              icon={item.icon}
-              className="mr-4 w-5 text-center"
-            />
-            {item.name}
+            <FontAwesomeIcon icon={item.icon} className={iconClasses(item)} />
+            <span className="text-sm font-medium">{item.name}</span>
           </li>
         ))}
       </ul>
