@@ -5,9 +5,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./dashboard/DashboardPage";
 import SignInForm from "./auth/SignInForm";
 import Navbar from "./layout/Navbar";
+import { useState } from "react";
 
 export default function App() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+  const [selectedTab, setSelectedTab] = useState<string>("View");
 
   if (isLoading) {
     return (
@@ -19,8 +21,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="flex flex-col h-screen bg-white">
-        <Navbar />
+      <div className="flex flex-col h-screen bg-white top-0 left-0 right-0">
+        <Navbar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         <Routes>
           <Route
             path="/login"
@@ -31,7 +33,11 @@ export default function App() {
           <Route
             path="/dashboard"
             element={
-              isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />
+              isAuthenticated ? (
+                <DashboardPage selectedTab={selectedTab} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
           <Route

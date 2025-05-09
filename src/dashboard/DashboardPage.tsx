@@ -1,13 +1,11 @@
-import { useState } from "react";
-import Sidebar from "./Sidebar";
+import ViewPage from "./playground/ViewPage";
 
-export default function DashboardPage() {
-  const [selectedTab, setSelectedTab] = useState<string>("Playground");
+const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
+  if (selectedTab === "View") {
+    return <ViewPage />;
+  }
 
-  return (
-    <div className="flex flex-col">
-      <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <div className="flex h-screen w-full bg-white"></div>
-    </div>
-  );
-}
+  return null;
+};
+
+export default DashboardPage;
