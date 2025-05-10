@@ -1,10 +1,16 @@
-const AppView = () => {
+import LoadingSpinner from "@/common/LoadingSpinner";
+import { Doc } from "../../../convex/_generated/dataModel";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
+
+const AppView = ({ appConfig }: { appConfig: Doc<"appConfiguration"> }) => {
   return (
     <div className="flex h-screen w-full bg-white flex-3 border border-slate-200">
       <iframe
-        src="http://localhost:5174/class/jn7b7h4tb5vm4std60sfddkjfn7f9yb9/gradebook"
+        src={`${appConfig.testUrl}`}
         className="w-full h-full border-0"
-        title="Gradebook"
+        sandbox="allow-scripts allow-same-origin"
+        title="lms"
       />
     </div>
   );

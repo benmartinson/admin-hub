@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function App() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const [selectedTab, setSelectedTab] = useState<string>("View");
+  const [selectedTab, setSelectedTab] = useState<string>("Customizations");
 
   if (isLoading) {
     return (

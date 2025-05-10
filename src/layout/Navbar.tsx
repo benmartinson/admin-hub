@@ -14,7 +14,9 @@ export default function Navbar({
   return (
     <div className="flex flex-col sticky top-0">
       <div className="px-12 z-10 bg-light p-4 border-b border-slate-200 flex justify-between items-center">
-        <div className="text-2xl font-light font-sans text-black">AdminHub</div>
+        <div className="text-2xl font-light font-sans text-black">
+          SchoolAdmin
+        </div>
         <div className="flex gap-2 items-center px-4 py-2 border-2 border-slate-200 rounded-full shadow-md">
           <FontAwesomeIcon className="text-slate-500" icon={faBook} />
           <div className="text-md font-medium">Learning Management System</div>

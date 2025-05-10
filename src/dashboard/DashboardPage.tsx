@@ -1,11 +1,19 @@
+import ConfigurationPage from "./ConfigurationPage";
 import ViewPage from "./playground/ViewPage";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
-  if (selectedTab === "View") {
-    return <ViewPage />;
+  let content;
+  if (selectedTab === "Customizations") {
+    content = <ViewPage />;
   }
 
-  return null;
+  if (selectedTab === "Configuration") {
+    content = <ConfigurationPage />;
+  }
+
+  return <div className="p-12 pt-4">{content}</div>;
 };
 
 export default DashboardPage;

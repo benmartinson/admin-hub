@@ -1,259 +1,108 @@
-import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
-
-interface CategoryProps {
-  title: string;
-  children: React.ReactNode;
-  isExpanded: boolean;
-  onToggle: () => void;
+import { useState, useEffect, useMemo } from "react";
+import Category from "../../common/Category";
+import ToggleSetting from "../../common/ToggleSetting";
+import { Doc, Id } from "../../../convex/_generated/dataModel";
+import AddSettingButton from "./AddSettingButton";
+// Define a type for individual settings based on expected structure
+interface AppSetting {
+  _id: Id<"appSetting">;
+  category: string;
+  descriptionLabel: string;
+  enabled: boolean;
+  // Add any other relevant fields if needed, e.g., a sortOrder field within a category
 }
 
-const Category = ({ title, children, isExpanded, onToggle }: CategoryProps) => {
-  return (
-    <div className="border-b border-slate-200">
-      <button
-        onClick={onToggle}
-        className="w-full flex items-center p-4 bg-slate-50 hover:bg-slate-100"
-      >
-        {isExpanded ? (
-          <ChevronDown className="w-4 h-4 mr-2" />
-        ) : (
-          <ChevronRight className="w-4 h-4 mr-2" />
-        )}
-        <span className="font-medium text-slate-600">{title}</span>
-      </button>
-      {isExpanded && <div className="px-8 pb-4">{children}</div>}
-    </div>
-  );
-};
-
-const ToggleSetting = ({
-  label,
-  value,
-  onChange,
+const AppSettings = ({
+  appSettings,
+  setIsAddingSetting,
+  handleUpdateSetting,
 }: {
-  label: string;
-  value: boolean;
-  onChange: (value: boolean) => void;
+  appSettings: Doc<"appSetting">[];
+  setIsAddingSetting: (isAddingSetting: boolean) => void;
+  handleUpdateSetting: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
-  return (
-    <div className="flex items-center justify-between py-2">
-      <span className="text-sm text-slate-700">{label}</span>
-      <button
-        onClick={() => onChange(!value)}
-        className={`w-10 h-6 rounded-full transition-colors ${
-          value ? "bg-slate-500" : "bg-slate-200"
-        }`}
-      >
-        <div
-          className={`w-4 h-4 rounded-full bg-white transform transition-transform ${
-            value ? "translate-x-5" : "translate-x-1"
-          }`}
-        />
-      </button>
-    </div>
+  const [displaySettings, setDisplaySettings] = useState<AppSetting[]>(
+    appSettings.map((setting) => ({
+      ...setting,
+      enabled: setting.enabled,
+    })),
   );
-};
-
-const RadioSetting = ({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: string[];
-  onChange: (value: string) => void;
-}) => {
-  return (
-    <div className="flex py-2 items-center justify-between">
-      <span className="text-sm text-slate-700 block">{label}</span>
-      <div className="flex gap-4">
-        {options.map((option) => (
-          <label key={option} className="flex items-center">
-            <input
-              type="radio"
-              checked={value === option}
-              onChange={() => onChange(option)}
-              className="mr-1"
-            />
-            <span className="text-sm capitalize">{option}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const AppSettings = () => {
   const [expandedCategories, setExpandedCategories] = useState<{
     [key: string]: boolean;
-  }>({
-    gradebook: true,
-    attendance: false,
-    quizzes: false,
-    reportCards: false,
-  });
+  }>(
+    appSettings.reduce(
+      (acc, setting) => {
+        acc[setting.category] = true;
+        return acc;
+      },
+      {} as { [key: string]: boolean },
+    ),
+  );
 
-  const [settings, setSettings] = useState({
-    gradebook: {
-      showPhotos: true,
-      showClassGrades: true,
-      showDateOrder: true,
-      showAddClassButton: true,
-      gridCellSize: "md",
-    },
-    attendance: {
-      showSection: true,
-      showPhotos: true,
-      useNickname: false,
-    },
-    quizzes: {
-      showSection: true,
-    },
-    reportCards: {
-      showSection: true,
-    },
-  });
+  const uniqueCategories = useMemo(() => {
+    if (!displaySettings || displaySettings.length === 0) {
+      return [];
+    }
+    // Sort categories alphabetically for consistent UI
+    return Array.from(
+      new Set(displaySettings.map((setting) => setting.category)),
+    ).sort();
+  }, [displaySettings]);
 
   const toggleCategory = (category: string) => {
+    console.log("Toggling category:", category);
     setExpandedCategories((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
   };
 
+  const handleSettingChange = async (
+    settingId: Id<"appSetting">,
+    newValue: boolean,
+  ) => {
+    setDisplaySettings((prevSettings) =>
+      prevSettings.map((setting) =>
+        setting._id === settingId ? { ...setting, enabled: newValue } : setting,
+      ),
+    );
+
+    await handleUpdateSetting({
+      id: settingId,
+      enabled: newValue,
+    });
+  };
+
+  if (appSettings.length === 0) {
+    return (
+      <div className="w-96 border border-r-0 border-slate-200 bg-white p-4">
+        <AddSettingButton setIsAddingSetting={setIsAddingSetting} />
+      </div>
+    );
+  }
+
   return (
     <div className="w-96 border border-r-0 border-slate-200 bg-white">
-      <Category
-        title="Gradebook"
-        isExpanded={expandedCategories.gradebook}
-        onToggle={() => toggleCategory("gradebook")}
-      >
-        <ToggleSetting
-          label="Show Photos?"
-          value={settings.gradebook.showPhotos}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              gradebook: { ...prev.gradebook, showPhotos: value },
-            }))
-          }
-        />
-        <ToggleSetting
-          label="Show Class Grades?"
-          value={settings.gradebook.showClassGrades}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              gradebook: { ...prev.gradebook, showClassGrades: value },
-            }))
-          }
-        />
-        <ToggleSetting
-          label="Show Date Order?"
-          value={settings.gradebook.showDateOrder}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              gradebook: { ...prev.gradebook, showDateOrder: value },
-            }))
-          }
-        />
-        <ToggleSetting
-          label="Show Add Class Button?"
-          value={settings.gradebook.showAddClassButton}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              gradebook: { ...prev.gradebook, showAddClassButton: value },
-            }))
-          }
-        />
-        <RadioSetting
-          label="Grid Cell Size?"
-          value={settings.gradebook.gridCellSize}
-          options={["sm", "md", "lg"]}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              gradebook: { ...prev.gradebook, gridCellSize: value },
-            }))
-          }
-        />
-      </Category>
-
-      <Category
-        title="Attendance"
-        isExpanded={expandedCategories.attendance}
-        onToggle={() => toggleCategory("attendance")}
-      >
-        <ToggleSetting
-          label="Show Section?"
-          value={settings.attendance.showSection}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              attendance: { ...prev.attendance, showSection: value },
-            }))
-          }
-        />
-        <ToggleSetting
-          label="Show Photos?"
-          value={settings.attendance.showPhotos}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              attendance: { ...prev.attendance, showPhotos: value },
-            }))
-          }
-        />
-        <ToggleSetting
-          label="Use Nickname?"
-          value={settings.attendance.useNickname}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              attendance: { ...prev.attendance, useNickname: value },
-            }))
-          }
-        />
-      </Category>
-
-      <Category
-        title="Quizzes"
-        isExpanded={expandedCategories.quizzes}
-        onToggle={() => toggleCategory("quizzes")}
-      >
-        <ToggleSetting
-          label="Show Section?"
-          value={settings.quizzes.showSection}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              quizzes: { ...prev.quizzes, showSection: value },
-            }))
-          }
-        />
-      </Category>
-
-      <Category
-        title="Report Cards"
-        isExpanded={expandedCategories.reportCards}
-        onToggle={() => toggleCategory("reportCards")}
-      >
-        <ToggleSetting
-          label="Show Section?"
-          value={settings.reportCards.showSection}
-          onChange={(value) =>
-            setSettings((prev) => ({
-              ...prev,
-              reportCards: { ...prev.reportCards, showSection: value },
-            }))
-          }
-        />
-      </Category>
+      {uniqueCategories.map((category) => (
+        <Category
+          key={category}
+          title={category}
+          isExpanded={!!expandedCategories[category]}
+          onToggle={() => toggleCategory(category)}
+        >
+          {displaySettings
+            .filter((setting) => setting.category === category)
+            .map((setting) => (
+              <ToggleSetting
+                key={setting._id.toString()}
+                label={setting.descriptionLabel}
+                value={setting.enabled}
+                onChange={(value) => handleSettingChange(setting._id, value)}
+              />
+            ))}
+        </Category>
+      ))}
+      <AddSettingButton setIsAddingSetting={setIsAddingSetting} />
     </div>
   );
 };
