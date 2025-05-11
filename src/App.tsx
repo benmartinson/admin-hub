@@ -22,7 +22,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <div className="flex flex-col h-screen bg-white top-0 left-0 right-0">
-        <Navbar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <Navbar
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          isAuthenticated={isAuthenticated}
+        />
         <Routes>
           <Route
             path="/login"

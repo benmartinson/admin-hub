@@ -4,8 +4,10 @@ import AppView from "./AppView";
 import { api } from "../../../convex/_generated/api";
 import LoadingSpinner from "@/common/LoadingSpinner";
 import AppSettingsContainer from "./AppSettingsContainer";
+import { useState } from "react";
 
 const ViewPage = () => {
+  const [toggleRefresh, setToggleRefresh] = useState(false);
   const appConfig = useQuery(api.appConfiguration.getAppConfiguration, {
     appId: 1,
   });
@@ -33,8 +35,12 @@ const ViewPage = () => {
         Adjust the settings for the app
       </div>
       <div className="flex" style={{ scrollbarWidth: "none" }}>
-        <AppSettingsContainer appConfig={appConfig} />
-        <AppView appConfig={appConfig} />
+        <AppSettingsContainer
+          appConfig={appConfig}
+          toggleRefresh={toggleRefresh}
+          setToggleRefresh={setToggleRefresh}
+        />
+        <AppView appConfig={appConfig} toggleRefresh={toggleRefresh} />
       </div>
     </>
   );

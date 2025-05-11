@@ -26,7 +26,6 @@ export const createAppSetting = mutation({
 export const getAppSettingsByAppConfigId = query({
   args: { appConfigId: v.id("appConfiguration") },
   handler: async (ctx, args) => {
-    console.log({ appConfigId: args.appConfigId });
     const appSettings = await ctx.db
       .query("appSetting")
       .withIndex("by_appConfigId", (q) => q.eq("appConfigId", args.appConfigId))

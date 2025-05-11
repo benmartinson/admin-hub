@@ -2,6 +2,7 @@ import ConfigurationPage from "./ConfigurationPage";
 import ViewPage from "./playground/ViewPage";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { useState } from "react";
 
 const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
   let content;

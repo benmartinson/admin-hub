@@ -8,19 +8,14 @@ import NewSettingForm from "./NewSettingForm";
 import AppSettings from "./AppSettings";
 import LoadingSpinner from "@/common/LoadingSpinner";
 
-// Define a type for individual settings based on expected structure
-interface AppSetting {
-  _id: Id<"appSetting">;
-  category: string;
-  descriptionLabel: string;
-  enabled: boolean;
-  // Add any other relevant fields if needed, e.g., a sortOrder field within a category
-}
-
 const AppSettingsContainer = ({
   appConfig,
+  toggleRefresh,
+  setToggleRefresh,
 }: {
   appConfig: Doc<"appConfiguration">;
+  toggleRefresh: boolean;
+  setToggleRefresh: (toggleRefresh: boolean) => void;
 }) => {
   const [isAddingSetting, setIsAddingSetting] = useState(false);
 
@@ -57,6 +52,7 @@ const AppSettingsContainer = ({
       return;
     }
     await updateAppSetting(newSetting);
+    setToggleRefresh(!toggleRefresh);
   };
 
   if (!fetchedAppSettings) {

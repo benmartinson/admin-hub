@@ -7,9 +7,11 @@ import { faBook } from "@fortawesome/free-solid-svg-icons";
 export default function Navbar({
   selectedTab,
   setSelectedTab,
+  isAuthenticated,
 }: {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
+  isAuthenticated: boolean;
 }) {
   return (
     <div className="flex flex-col sticky top-0">
@@ -17,13 +19,19 @@ export default function Navbar({
         <div className="text-2xl font-light font-sans text-black">
           SchoolAdmin
         </div>
-        <div className="flex gap-2 items-center px-4 py-2 border-2 border-slate-200 rounded-full shadow-md">
-          <FontAwesomeIcon className="text-slate-500" icon={faBook} />
-          <div className="text-md font-medium">Learning Management System</div>
-        </div>
+        {isAuthenticated && (
+          <div className="flex gap-2 items-center px-4 py-2 border-2 border-slate-200 rounded-full shadow-md">
+            <FontAwesomeIcon className="text-slate-500" icon={faBook} />
+            <div className="text-md font-medium">
+              Learning Management System
+            </div>
+          </div>
+        )}
         <UserProfile />
       </div>
-      <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      {isAuthenticated && (
+        <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      )}
     </div>
   );
 }
