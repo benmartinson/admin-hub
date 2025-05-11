@@ -1,7 +1,4 @@
-import LoadingSpinner from "@/common/LoadingSpinner";
 import { Doc } from "../../../convex/_generated/dataModel";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 import { useEffect, useState } from "react";
 
 const AppView = ({

@@ -3,23 +3,21 @@ import Category from "../../common/Category";
 import ToggleSetting from "../../common/ToggleSetting";
 import { Doc, Id } from "../../../convex/_generated/dataModel";
 import AddSettingButton from "./AddSettingButton";
-// Define a type for individual settings based on expected structure
-interface AppSetting {
-  _id: Id<"appSetting">;
-  category: string;
-  descriptionLabel: string;
-  enabled: boolean;
-  // Add any other relevant fields if needed, e.g., a sortOrder field within a category
-}
+import { AppSetting } from "@/types";
 
 const AppSettings = ({
   appSettings,
   setIsAddingSetting,
-  handleUpdateSetting,
+  setEditingSettingId,
+  handleUpdateEnabled,
 }: {
   appSettings: Doc<"appSetting">[];
   setIsAddingSetting: (isAddingSetting: boolean) => void;
-  handleUpdateSetting: (e: React.FormEvent<HTMLFormElement>) => void;
+  setEditingSettingId: (editingSettingId: Id<"appSetting"> | null) => void;
+  handleUpdateEnabled: (newSetting: {
+    id: Id<"appSetting">;
+    enabled: boolean;
+  }) => void;
 }) => {
   const [displaySettings, setDisplaySettings] = useState<AppSetting[]>(
     appSettings.map((setting) => ({
@@ -50,14 +48,13 @@ const AppSettings = ({
   }, [displaySettings]);
 
   const toggleCategory = (category: string) => {
-    console.log("Toggling category:", category);
     setExpandedCategories((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
   };
 
-  const handleSettingChange = async (
+  const handleChangeEnabled = async (
     settingId: Id<"appSetting">,
     newValue: boolean,
   ) => {
@@ -67,7 +64,7 @@ const AppSettings = ({
       ),
     );
 
-    await handleUpdateSetting({
+    await handleUpdateEnabled({
       id: settingId,
       enabled: newValue,
     });
@@ -97,7 +94,8 @@ const AppSettings = ({
                 key={setting._id.toString()}
                 label={setting.descriptionLabel}
                 value={setting.enabled}
-                onChange={(value) => handleSettingChange(setting._id, value)}
+                onChange={(value) => handleChangeEnabled(setting._id, value)}
+                setIsEditing={() => setEditingSettingId(setting._id)}
               />
             ))}
         </Category>
