@@ -1,5 +1,4 @@
 import { useConvexAuth } from "convex/react";
-import UserProfile from "./auth/UserProfile";
 import LoadingSpinner from "./common/LoadingSpinner";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./dashboard/DashboardPage";

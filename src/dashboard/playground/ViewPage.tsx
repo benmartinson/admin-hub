@@ -1,13 +1,12 @@
 import { useQuery } from "convex/react";
-import AppSettings from "./AppSettings";
 import AppView from "./AppView";
 import { api } from "../../../convex/_generated/api";
 import LoadingSpinner from "@/common/LoadingSpinner";
 import AppSettingsContainer from "./AppSettingsContainer";
 import { useState } from "react";
 import {
+  faArrowUpRightFromSquare,
   faExpand,
-  faGear,
   faMaximize,
   faMobileScreenButton,
 } from "@fortawesome/free-solid-svg-icons";
@@ -43,47 +42,54 @@ const ViewPage = () => {
   const screenSizeClasses = (isSelected: boolean) => {
     return classNames({
       "text-slate-700": isSelected,
-      "text-slate-400  cursor-pointer": !isSelected,
+      "hover:text-slate-500 text-slate-400  cursor-pointer": !isSelected,
     });
   };
 
   return (
-    <>
-      <div className="flex w-full justify-between p-2 items-center text-slate-400">
-        <div>Adjust the settings for the app</div>
-        <div className="flex gap-8 text-2xl">
-          <FontAwesomeIcon
-            icon={faMobileScreenButton}
-            className={screenSizeClasses(selectedScreenSize === "mobile")}
-            onClick={() => setSelectedScreenSize("mobile")}
-          />
-          <FontAwesomeIcon
-            icon={faExpand}
-            className={screenSizeClasses(selectedScreenSize === "normal")}
-            onClick={() => setSelectedScreenSize("normal")}
-          />
-          <FontAwesomeIcon
-            icon={faMaximize}
-            className={screenSizeClasses(selectedScreenSize === "maximize")}
-            onClick={() => setSelectedScreenSize("maximize")}
-          />
-        </div>
-      </div>
-      <div className="flex" style={{ scrollbarWidth: "none" }}>
-        {selectedScreenSize !== "maximize" && (
-          <AppSettingsContainer
-            appConfig={appConfig}
-            toggleRefresh={toggleRefresh}
-            setToggleRefresh={setToggleRefresh}
-          />
-        )}
-        <AppView
+    <div className="flex" style={{ scrollbarWidth: "none" }}>
+      {selectedScreenSize !== "maximize" && (
+        <AppSettingsContainer
           appConfig={appConfig}
           toggleRefresh={toggleRefresh}
-          selectedScreenSize={selectedScreenSize}
+          setToggleRefresh={setToggleRefresh}
         />
+      )}
+      <AppView
+        appConfig={appConfig}
+        toggleRefresh={toggleRefresh}
+        selectedScreenSize={selectedScreenSize}
+      />
+
+      <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-8 bg-[#fffef5] border-slate-200 w-10 h-full items-center text-slate-400">
+        <FontAwesomeIcon
+          icon={faMaximize}
+          className={screenSizeClasses(selectedScreenSize === "maximize")}
+          onClick={() => setSelectedScreenSize("maximize")}
+        />
+        <FontAwesomeIcon
+          icon={faExpand}
+          className={screenSizeClasses(selectedScreenSize === "normal")}
+          onClick={() => setSelectedScreenSize("normal")}
+        />
+        <FontAwesomeIcon
+          icon={faMobileScreenButton}
+          className={screenSizeClasses(selectedScreenSize === "mobile")}
+          onClick={() => setSelectedScreenSize("mobile")}
+        />
+        <a
+          href={appConfig.testUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex"
+        >
+          <FontAwesomeIcon
+            icon={faArrowUpRightFromSquare}
+            className={`${screenSizeClasses(false)} text-2xl`}
+          />
+        </a>
       </div>
-    </>
+    </div>
   );
 };
 

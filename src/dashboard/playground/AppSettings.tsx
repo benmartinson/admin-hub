@@ -70,16 +70,8 @@ const AppSettings = ({
     });
   };
 
-  if (appSettings.length === 0) {
-    return (
-      <div className="w-96 border border-r-0 border-slate-200 bg-white p-4">
-        <AddSettingButton setIsAddingSetting={setIsAddingSetting} />
-      </div>
-    );
-  }
-
   return (
-    <div className="w-96 border border-r-0 border-slate-200 bg-white">
+    <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
       {uniqueCategories.map((category) => (
         <Category
           key={category}

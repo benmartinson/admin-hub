@@ -37,14 +37,14 @@ export default function Navbar({
   return (
     <>
       <div ref={navbarRef} className="flex flex-col">
-        <div className="px-12 z-10 bg-light p-4 border-b border-slate-200 flex justify-between items-center">
+        <div className="px-12 z-10 bg-light py-2 border-b border-slate-200 flex justify-between items-center">
           <div className="text-2xl font-light font-sans text-black">
             SchoolAdmin
           </div>
           {isAuthenticated && (
-            <div className="flex gap-2 items-center px-4 py-2 border-2 border-slate-200 rounded-full shadow-md">
+            <div className="flex gap-2 items-center px-4 py-1.5 border-2 border-slate-200 rounded-full shadow-md">
               <FontAwesomeIcon className="text-slate-500" icon={faBook} />
-              <div className="text-md font-medium">
+              <div className="text-sm text-slate-600">
                 Learning Management System
               </div>
             </div>
@@ -53,13 +53,11 @@ export default function Navbar({
         </div>
       </div>
       {isAuthenticated && (
-        <div className="sticky -top-7 z-10 bg-white">
-          <Sidebar
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-            showSidebarIcons={showSidebarIcons}
-          />
-        </div>
+        <Sidebar
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          showSidebarIcons={showSidebarIcons}
+        />
       )}
     </>
   );

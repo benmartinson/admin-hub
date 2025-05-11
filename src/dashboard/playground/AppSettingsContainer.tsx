@@ -53,7 +53,7 @@ const AppSettingsContainer = ({
       enabled: newSetting.enabled,
     });
     setTimeout(() => {
-      setToggleRefresh(!toggleRefresh);
+      // setToggleRefresh(!toggleRefresh);
     }, 2000);
   };
 
