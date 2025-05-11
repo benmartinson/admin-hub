@@ -5,9 +5,11 @@ import classNames from "classnames";
 const Sidebar = ({
   selectedTab,
   setSelectedTab,
+  showSidebarIcons,
 }: {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
+  showSidebarIcons: boolean;
 }) => {
   const isSelected = (item: { name: string }) => selectedTab === item.name;
   const listClasses = (item: { name: string }) =>
@@ -24,6 +26,8 @@ const Sidebar = ({
     classNames("w-5 h-5", {
       "text-black": isSelected(item),
       "text-slate-400 group-hover:text-slate-600": !isSelected(item),
+      "opacity-0 transition-opacity duration-300 ease-in-out":
+        !showSidebarIcons,
     });
 
   return (

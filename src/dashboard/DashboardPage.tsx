@@ -1,8 +1,5 @@
 import ConfigurationPage from "./ConfigurationPage";
 import ViewPage from "./playground/ViewPage";
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
-import { useState } from "react";
 
 const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
   let content;
@@ -14,7 +11,7 @@ const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
     content = <ConfigurationPage />;
   }
 
-  return <div className="p-12 pt-4">{content}</div>;
+  return <div className="p-12 pt-4 bg-[#FAFAFA]">{content}</div>;
 };
 
 export default DashboardPage;
