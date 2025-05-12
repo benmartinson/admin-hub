@@ -25,4 +25,11 @@ export default defineSchema({
     enabled: v.boolean(),
     teacherCanUpdate: v.boolean(),
   }).index("by_appConfigId", ["appConfigId"]),
+
+  users: defineTable({
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+    phone: v.optional(v.string()),
+    tokenIdentifier: v.optional(v.string()),
+  }).index("by_tokenIdentifier", ["tokenIdentifier"]),
 });

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { navItems } from "@/constants";
 import classNames from "classnames";
+import { useLocation } from "react-router-dom";
 
 const Sidebar = ({
   selectedTab,

@@ -5,6 +5,7 @@ import DashboardPage from "./dashboard/DashboardPage";
 import SignInForm from "./auth/SignInForm";
 import Navbar from "./layout/Navbar";
 import { useState } from "react";
+import AccountPage from "./AccountPage";
 
 export default function App() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -31,6 +32,12 @@ export default function App() {
             path="/login"
             element={
               !isAuthenticated ? <SignInForm /> : <Navigate to="/dashboard" />
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              isAuthenticated ? <AccountPage /> : <Navigate to="/login" />
             }
           />
           <Route
