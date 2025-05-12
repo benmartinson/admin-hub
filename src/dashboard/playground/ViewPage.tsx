@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 
 const ViewPage = () => {
-  const [toggleRefresh, setToggleRefresh] = useState(false);
   const [selectedScreenSize, setSelectedScreenSize] = useState<
     "mobile" | "normal" | "maximize"
   >("normal");
@@ -49,17 +48,9 @@ const ViewPage = () => {
   return (
     <div className="flex" style={{ scrollbarWidth: "none" }}>
       {selectedScreenSize !== "maximize" && (
-        <AppSettingsContainer
-          appConfig={appConfig}
-          toggleRefresh={toggleRefresh}
-          setToggleRefresh={setToggleRefresh}
-        />
+        <AppSettingsContainer appConfig={appConfig} />
       )}
-      <AppView
-        appConfig={appConfig}
-        toggleRefresh={toggleRefresh}
-        selectedScreenSize={selectedScreenSize}
-      />
+      <AppView appConfig={appConfig} selectedScreenSize={selectedScreenSize} />
 
       <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-8 bg-[#fffef5] border-slate-200 w-10 h-full items-center text-slate-400">
         <FontAwesomeIcon

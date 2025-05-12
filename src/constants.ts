@@ -1,9 +1,7 @@
 import {
-  faPlay,
   faExchangeAlt,
   faDatabase,
   faChartBar,
-  faCog,
   faWrench,
   faCalculator,
 } from "@fortawesome/free-solid-svg-icons";

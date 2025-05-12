@@ -9,12 +9,8 @@ import EditSettingForm from "./EditSettingForm";
 
 const AppSettingsContainer = ({
   appConfig,
-  toggleRefresh,
-  setToggleRefresh,
 }: {
   appConfig: Doc<"appConfiguration">;
-  toggleRefresh: boolean;
-  setToggleRefresh: (toggleRefresh: boolean) => void;
 }) => {
   const [isAddingSetting, setIsAddingSetting] = useState(false);
   const [editingSettingId, setEditingSettingId] =
@@ -52,9 +48,6 @@ const AppSettingsContainer = ({
       id: newSetting.id,
       enabled: newSetting.enabled,
     });
-    setTimeout(() => {
-      // setToggleRefresh(!toggleRefresh);
-    }, 2000);
   };
 
   const handleUpdateSetting = async (

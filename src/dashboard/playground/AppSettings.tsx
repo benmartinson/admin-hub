@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Category from "../../common/Category";
 import ToggleSetting from "../../common/ToggleSetting";
 import { Doc, Id } from "../../../convex/_generated/dataModel";

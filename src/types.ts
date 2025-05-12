@@ -1,4 +1,4 @@
-import { Id } from "./_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 
 export type AppSetting = {
   _id: Id<"appSetting">;
