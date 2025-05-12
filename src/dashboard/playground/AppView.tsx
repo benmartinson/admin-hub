@@ -10,7 +10,7 @@ const AppView = ({
 }: {
   appConfig: Doc<"appConfiguration">;
   selectedScreenSize: "mobile" | "normal" | "maximize";
-  toggleRefresh: boolean;
+  toggleRefresh: number;
 }) => {
   const [iframeError, setIframeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,15 +60,11 @@ const AppView = ({
   const containerClasses = classNames(
     "flex h-screen w-full flex-3 bg-white border border-slate-200",
     {
-      "px-68 py-4":
+      "px-60 py-10":
         selectedScreenSize === "mobile" && !iframeError && !isLoading,
-      "pt-20 justify-center": iframeError || isLoading,
+      "pt-10 justify-center": iframeError || isLoading,
     },
   );
-
-  const iframeWrapperClasses = classNames("w-full h-full", {
-    "px-68 py-4": selectedScreenSize === "mobile",
-  });
 
   if (isLoading) {
     return (
@@ -95,33 +91,20 @@ const AppView = ({
 
   return (
     <div className={containerClasses}>
-      <div
-        className={iframeWrapperClasses}
-        style={
-          selectedScreenSize === "mobile"
-            ? {
-                width: "375px",
-                height: "667px",
-                boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-              }
-            : { width: "100%", height: "100%" }
-        }
-      >
-        <iframe
-          src={validatedUrl}
-          className="w-full h-full border-0"
-          sandbox="allow-scripts allow-same-origin"
-          key={toggleRefresh}
-          title="lms"
-          onError={() => {
-            if (!iframeError) setIframeError(true);
-            setIsLoading(false);
-          }}
-          onLoad={() => {
-            setIsLoading(false);
-          }}
-        />
-      </div>
+      <iframe
+        src={validatedUrl}
+        className="w-full h-full border-0"
+        sandbox="allow-scripts allow-same-origin"
+        key={toggleRefresh}
+        title="lms"
+        onError={() => {
+          if (!iframeError) setIframeError(true);
+          setIsLoading(false);
+        }}
+        onLoad={() => {
+          setIsLoading(false);
+        }}
+      />
     </div>
   );
 };

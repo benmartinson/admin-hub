@@ -69,7 +69,7 @@ const UserProfile = () => {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-48 bg-light rounded-md shadow-lg py-1 border-2 border-slate-200 z-50"
+          className="absolute right-0 mt-1 w-48 bg-light rounded-md shadow-lg py-1 border-2 border-slate-200 z-50"
         >
           <button
             onClick={() => {
