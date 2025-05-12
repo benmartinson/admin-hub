@@ -7,7 +7,7 @@ const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
     content = <ViewPage />;
   }
 
-  if (selectedTab === "Configuration") {
+  if (selectedTab === "Setup") {
     content = <ConfigurationPage />;
   }
 
