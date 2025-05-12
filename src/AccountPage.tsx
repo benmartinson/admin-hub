@@ -100,7 +100,7 @@ const AccountPage = () => {
               />
               {lastSavedField === "phone" && (
                 <span className="absolute right-2 top-1/2 -translate-y-1/2 mt-0.5 text-green-500">
-                  &#x2714;
+                  <FontAwesomeIcon icon={faCheck} />
                 </span>
               )}
             </div>
@@ -121,11 +121,10 @@ const AccountPage = () => {
                 onBlur={() => handleFieldBlur("email", email)}
                 className="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-slate-700 pr-8"
                 placeholder="you@example.com"
-                readOnly
               />
               {lastSavedField === "email" && (
                 <span className="absolute right-2 top-1/2 -translate-y-1/2 mt-0.5 text-green-500">
-                  &#x2714;
+                  <FontAwesomeIcon icon={faCheck} />
                 </span>
               )}
             </div>

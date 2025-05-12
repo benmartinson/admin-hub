@@ -1,12 +1,14 @@
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../convex/_generated/api";
 
 const UserProfile = () => {
   const { isAuthenticated } = useConvexAuth();
   const { signOut } = useAuthActions();
+  const user = useQuery(api.users.currentUser);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -47,6 +49,13 @@ const UserProfile = () => {
     };
   }, [isOpen]);
 
+  const userInitials = user?.name
+    ? user.name
+        .split(" ")
+        .map((name) => name[0])
+        .join("")
+    : "JD";
+
   return (
     <div className="relative z-20">
       <button
@@ -55,7 +64,7 @@ const UserProfile = () => {
         disabled={!isAuthenticated}
         className={classes}
       >
-        BM
+        {userInitials}
       </button>
       {isOpen && (
         <div
@@ -71,12 +80,6 @@ const UserProfile = () => {
           >
             Account
           </button>
-          {/* <a
-            href="#"
-            className="block px-4 py-2 text-sm text-dark hover:bg-slate-100"
-          >
-            Settings
-          </a> */}
           <button
             onClick={() => {
               void signOut();
