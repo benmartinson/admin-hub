@@ -41,7 +41,7 @@ export default function Navbar({
   const handleLogoClick = () => {
     if (isAccountPage) {
       navigate("/dashboard");
-      setSelectedTab("Customizations");
+      setSelectedTab("View");
     }
   };
 

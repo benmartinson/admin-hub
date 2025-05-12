@@ -6,9 +6,11 @@ import LoadingSpinner from "@/common/LoadingSpinner";
 const AppView = ({
   appConfig,
   selectedScreenSize,
+  toggleRefresh,
 }: {
   appConfig: Doc<"appConfiguration">;
   selectedScreenSize: "mobile" | "normal" | "maximize";
+  toggleRefresh: boolean;
 }) => {
   const [iframeError, setIframeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -109,6 +111,7 @@ const AppView = ({
           src={validatedUrl}
           className="w-full h-full border-0"
           sandbox="allow-scripts allow-same-origin"
+          key={toggleRefresh}
           title="lms"
           onError={() => {
             if (!iframeError) setIframeError(true);

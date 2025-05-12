@@ -9,6 +9,7 @@ import {
   faExpand,
   faMaximize,
   faMobileScreenButton,
+  faRefresh,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
@@ -17,6 +18,7 @@ const ViewPage = () => {
   const [selectedScreenSize, setSelectedScreenSize] = useState<
     "mobile" | "normal" | "maximize"
   >("normal");
+  const [toggleRefresh, setToggleRefresh] = useState(0);
   const appConfig = useQuery(api.appConfiguration.getAppConfiguration, {
     appId: 1,
   });
@@ -48,9 +50,16 @@ const ViewPage = () => {
   return (
     <div className="flex" style={{ scrollbarWidth: "none" }}>
       {selectedScreenSize !== "maximize" && (
-        <AppSettingsContainer appConfig={appConfig} />
+        <AppSettingsContainer
+          appConfig={appConfig}
+          setToggleRefresh={setToggleRefresh}
+        />
       )}
-      <AppView appConfig={appConfig} selectedScreenSize={selectedScreenSize} />
+      <AppView
+        appConfig={appConfig}
+        selectedScreenSize={selectedScreenSize}
+        toggleRefresh={toggleRefresh}
+      />
 
       <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-8 bg-[#fffef5] border-slate-200 w-10 h-full items-center text-slate-400">
         <FontAwesomeIcon
@@ -79,6 +88,11 @@ const ViewPage = () => {
             className={`${screenSizeClasses(false)} text-2xl`}
           />
         </a>
+        <FontAwesomeIcon
+          icon={faRefresh}
+          className={`${screenSizeClasses(false)} text-2xl`}
+          onClick={() => setToggleRefresh(toggleRefresh + 1)}
+        />
       </div>
     </div>
   );

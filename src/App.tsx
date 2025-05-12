@@ -9,7 +9,7 @@ import AccountPage from "./AccountPage";
 
 export default function App() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const [selectedTab, setSelectedTab] = useState<string>("Customizations");
+  const [selectedTab, setSelectedTab] = useState<string>("View");
 
   if (isLoading) {
     return (

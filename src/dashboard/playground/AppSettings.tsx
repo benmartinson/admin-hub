@@ -72,6 +72,11 @@ const AppSettings = ({
 
   return (
     <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
+      <div className="border-b border-slate-200">
+        <div className="w-full flex items-center p-4 bg-white">
+          <span className="font-medium text-slate-500">Customizations</span>
+        </div>
+      </div>
       {uniqueCategories.map((category) => (
         <Category
           key={category}

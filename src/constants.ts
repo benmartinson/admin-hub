@@ -3,13 +3,13 @@ import {
   faDatabase,
   faChartBar,
   faWrench,
-  faCalculator,
+  faMountainSun,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const navItems = [
-  { name: "Customizations", icon: faCalculator },
-  { name: "Changes", icon: faExchangeAlt },
+  { name: "View", icon: faMountainSun },
   { name: "Data", icon: faDatabase },
   { name: "Reports", icon: faChartBar },
-  { name: "Configuration", icon: faWrench },
+  { name: "Changes", icon: faExchangeAlt },
+  { name: "Setup", icon: faWrench },
 ];

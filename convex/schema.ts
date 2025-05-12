@@ -31,5 +31,6 @@ export default defineSchema({
     email: v.optional(v.string()),
     phone: v.optional(v.string()),
     tokenIdentifier: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
   }).index("by_tokenIdentifier", ["tokenIdentifier"]),
 });

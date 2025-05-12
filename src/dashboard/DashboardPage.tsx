@@ -3,7 +3,7 @@ import ViewPage from "./playground/ViewPage";
 
 const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
   let content;
-  if (selectedTab === "Customizations") {
+  if (selectedTab === "View") {
     content = <ViewPage />;
   }
 
