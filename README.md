@@ -1,45 +1,62 @@
-# Welcome to your Convex + React (Vite) + Convex Auth app
+### Try it!
+https://admin-hub-sepia.vercel.app/dashboard
+###
+Test user - admin credentials
+```
+Email: benmartinson92@gmail.com
+Password: Test123!
+```
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+#
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/ed5cd92e-d8f3-4c29-9f34-9602d7259e55" />
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+---
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Vite](https://vitest.dev/) for optimized web hosting
-- [Tailwind](https://tailwindcss.com/) for building great looking UI
-- [Convex Auth](https://labs.convex.dev/auth) for authentication
+<img width="1434" alt="image" src="https://github.com/user-attachments/assets/f111106d-1ecb-4c93-b749-835bc2b83669" />
 
-## Get started
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+#### Gradebook Repo
 
+https://github.com/benmartinson/gradebook
+
+#### Description
+
+The idea behind this app is to empower a school admin to control completely the software that powers their school. They own the code to the 'Gradebook' because it's open source. They would create their own repo that is a fork of the original, in order to customize the Gradebook to fit the needs of their specific school.
+
+The 'AdminHub' would not be open source, the admin would sign up to use it, but it helps them manage the 'Gradebook' code. They manage all the data and customizations used by the Gradebook. 
+
+---
+
+### Admin Tools
+##### Customizations
+Admins can keep track of all the settings that are available for the Gradebook. The Gradebook fetches these settings and conditionally renders based on them. The idea is that the admin would add settings and then would actually change the Gradebook code to account for them. They can also choose to allow the teacher to switch on/off these settings from within the gradebook (not yet implemented).
+
+<img width="808" alt="image" src="https://github.com/user-attachments/assets/94cd0a59-d48a-45ae-a8ab-a7fa9c4be029" />
+
+##### School data (not yet implemented fully)
+
+Admins will be able to create and manage all data that is used by the Gradebook. Such as classes, grading periods, assignments, grades, etc. A future feature idea is to allow creation of new tables, schemas changes/additions from within the app.
+
+##### Code change reporting (not yet implemented)
+
+Admins will be able to see code changes they make in their Gradebook repo (implemented with Github actions), if they choose to, to help them keep track what needs to be done and what past changes have been made to the code. They will also see requests for changes from the teachers, who can report bugs or request new features.
+
+##### Gradebook Users (not yet implemented)
+
+The Gradebook will have users, teachers and also students, that can login and see the custom UI's that the admin has created. The admin will control user accounts from AdminHub.
+
+#### Run locally
 ```
 npm install
-npm run dev
+```
+then run front end server:
+```
+npm run dev:frontend
+```
+and backend on a different terminal tab:
+```
+npm run dev:backend
 ```
 
-If you're reading this README on GitHub and want to use this template, run:
-
-```
-npm create convex@latest -- -t react-vite-convexauth
-```
-
-For more information on how to configure Convex Auth, check out the [Convex Auth docs](https://labs.convex.dev/auth/).
-
-For more examples of different Convex Auth flows, check out this [example repo](https://www.convex.dev/templates/convex-auth).
-
-## Learn more
-
-To learn more about developing your project with Convex, check out:
-
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
-
-## Join the community
-
-Join thousands of developers building full-stack apps with Convex:
-
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
+#### How it works
+[Convex ](https://www.convex.dev/) is used to create a realtime connection between the frontend and the backend (of both applications). This is what allows the smooth updates between the AdminHub, and the Gradebook running in the iframe. If this was used by a real school, they would need to setup their own convex account and Gradebook fork. They would then configure it within the AdminHub 'setup' tab. 
