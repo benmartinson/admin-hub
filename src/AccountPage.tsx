@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +15,13 @@ const AccountPage = () => {
   const [lastSavedField, setLastSavedField] = useState<string | null>(null);
   let saveSuccessTimeout: NodeJS.Timeout | null = null;
 
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    phone?: string;
+    email?: string;
+  }>({});
+  let errorClearTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     if (user) {
       if (name !== (user.name || "")) setName(user.name || "");
@@ -25,6 +32,8 @@ const AccountPage = () => {
     }
     return () => {
       if (saveSuccessTimeout) clearTimeout(saveSuccessTimeout);
+      if (errorClearTimeoutRef.current)
+        clearTimeout(errorClearTimeoutRef.current);
     };
   }, [user]);
 
@@ -34,8 +43,30 @@ const AccountPage = () => {
   ) => {
     if (!user) return;
 
+    // Clear previous error for this field
+    setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+    if (errorClearTimeoutRef.current) {
+      clearTimeout(errorClearTimeoutRef.current);
+      errorClearTimeoutRef.current = null;
+    }
+
     const currentValue = user[field] || "";
     if (value === currentValue) return;
+
+    // Specific email change error
+    if (
+      field === "email" &&
+      user.email === "benmartinson92@gmail.com" &&
+      value !== user.email
+    ) {
+      const errorMsg = "This email address cannot be changed.";
+      setFieldErrors((prev) => ({ ...prev, email: errorMsg }));
+      errorClearTimeoutRef.current = setTimeout(() => {
+        setFieldErrors((prev) => ({ ...prev, email: undefined }));
+        errorClearTimeoutRef.current = null;
+      }, 3000);
+      return;
+    }
 
     try {
       await updateAccount({ [field]: value || undefined });
@@ -47,6 +78,12 @@ const AccountPage = () => {
     } catch (error) {
       console.error(`Failed to update ${field}:`, error);
       setLastSavedField(null); // Clear checkmark on error
+      const errorMsg = `Failed to update ${field}.`;
+      setFieldErrors((prev) => ({ ...prev, [field]: errorMsg }));
+      errorClearTimeoutRef.current = setTimeout(() => {
+        setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+        errorClearTimeoutRef.current = null;
+      }, 3000);
     }
   };
 
@@ -80,6 +117,9 @@ const AccountPage = () => {
                 </span>
               )}
             </div>
+            {fieldErrors.name && (
+              <p className="mt-1 text-xs text-red-600">{fieldErrors.name}</p>
+            )}
           </div>
           <div>
             <label
@@ -104,6 +144,9 @@ const AccountPage = () => {
                 </span>
               )}
             </div>
+            {fieldErrors.phone && (
+              <p className="mt-1 text-xs text-red-600">{fieldErrors.phone}</p>
+            )}
           </div>
           <div>
             <label
@@ -128,6 +171,9 @@ const AccountPage = () => {
                 </span>
               )}
             </div>
+            {fieldErrors.email && (
+              <p className="mt-1 text-xs text-red-600">{fieldErrors.email}</p>
+            )}
           </div>
         </div>
       </div>
