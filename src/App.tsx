@@ -1,5 +1,4 @@
 import { useConvexAuth } from "convex/react";
-import LoadingSpinner from "./common/LoadingSpinner";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./dashboard/DashboardPage";
 import SignInForm from "./auth/SignInForm";
@@ -13,9 +12,7 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <main className="p-8 flex flex-col gap-16 items-center justify-center min-h-screen">
-        <LoadingSpinner />
-      </main>
+      <main className="p-8 flex flex-col gap-16 items-center justify-center min-h-screen"></main>
     );
   }
 

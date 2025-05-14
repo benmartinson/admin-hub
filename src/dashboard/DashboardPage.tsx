@@ -11,7 +11,7 @@ const DashboardPage = ({ selectedTab }: { selectedTab: string }) => {
     content = <ConfigurationPage />;
   }
 
-  return <div className="p-12 pt-4 bg-[#FAFAFA]">{content}</div>;
+  return <div className="p-12 pt-4 h-full bg-[#FAFAFA]">{content}</div>;
 };
 
 export default DashboardPage;

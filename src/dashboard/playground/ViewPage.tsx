@@ -1,7 +1,6 @@
 import { useQuery } from "convex/react";
 import AppView from "./AppView";
 import { api } from "../../../convex/_generated/api";
-import LoadingSpinner from "@/common/LoadingSpinner";
 import AppSettingsContainer from "./AppSettingsContainer";
 import { useState } from "react";
 import {
@@ -25,11 +24,7 @@ const ViewPage = () => {
   console.log(appConfig);
 
   if (!appConfig) {
-    return (
-      <div className="text-center text-slate-400 w-full mt-16">
-        <LoadingSpinner />
-      </div>
-    );
+    return <div className="text-center text-slate-400 w-full mt-16"></div>;
   }
 
   if (!appConfig.testUrl) {

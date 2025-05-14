@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { Doc } from "../../../convex/_generated/dataModel";
 import { useState, useEffect, useMemo } from "react";
-import LoadingSpinner from "@/common/LoadingSpinner";
 
 const AppView = ({
   appConfig,
@@ -72,11 +71,7 @@ const AppView = ({
   });
 
   if (isLoading) {
-    return (
-      <div className={containerClasses}>
-        <LoadingSpinner />
-      </div>
-    );
+    return <div className={containerClasses}></div>;
   }
 
   if (iframeError) {

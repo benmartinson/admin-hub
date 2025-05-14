@@ -4,8 +4,8 @@ import { api } from "../../../convex/_generated/api";
 import { Doc, Id } from "../../../convex/_generated/dataModel";
 import NewSettingForm from "./NewSettingForm";
 import AppSettings from "./AppSettings";
-import LoadingSpinner from "@/common/LoadingSpinner";
 import EditSettingForm from "./EditSettingForm";
+import AppSettingHeader from "./AppSettingHeader";
 
 const AppSettingsContainer = ({
   appConfig,
@@ -74,8 +74,10 @@ const AppSettingsContainer = ({
 
   if (!fetchedAppSettings) {
     return (
-      <div className="w-96 border border-r-0 border-slate-200 bg-white p-4">
-        <LoadingSpinner />
+      <div className="border border-r-0 border-slate-200 bg-white">
+        <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
+          <AppSettingHeader />
+        </div>
       </div>
     );
   }
