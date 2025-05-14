@@ -1,6 +1,6 @@
 #### The Idea
 
-To empowers a school admin to control completely the software that powers their school. They own the code to the [Gradebook](https://github.com/benmartinson/gradebook), as it's meant to be an open source tool. AdminHub (aka SchoolAdmin) helps them manage the Gradebook code, and all the data and customizations used by it. 
+To empowers a school admin to completely control the software that powers their school. They own the code to the [Gradebook](https://github.com/benmartinson/gradebook), as it's meant to be an open source tool. AdminHub (aka SchoolAdmin) helps them manage the Gradebook code, and all the data and customizations used by it. 
 
 #### Why?
 
