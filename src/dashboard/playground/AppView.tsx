@@ -58,13 +58,18 @@ const AppView = ({
   }, [validatedUrl]);
 
   const containerClasses = classNames(
-    "flex h-screen w-full flex-3 bg-white border border-slate-200",
+    "flex h-screen w-full flex-3 border border-slate-200",
     {
-      "px-60 py-10":
+      "px-60 py-8 bg-slate-200":
         selectedScreenSize === "mobile" && !iframeError && !isLoading,
+      "bg-white": selectedScreenSize !== "mobile",
       "pt-10 justify-center": iframeError || isLoading,
     },
   );
+
+  const iframeClasses = classNames("w-full h-full border-0", {
+    "border-3 border-slate-700 rounded-3xl": selectedScreenSize === "mobile",
+  });
 
   if (isLoading) {
     return (
@@ -93,7 +98,7 @@ const AppView = ({
     <div className={containerClasses}>
       <iframe
         src={validatedUrl}
-        className="w-full h-full border-0"
+        className={iframeClasses}
         sandbox="allow-scripts allow-same-origin"
         key={toggleRefresh}
         title="lms"
