@@ -1,4 +1,4 @@
-import { ConvexReactClient, ConvexProvider, useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { useEffect } from "react";
 import { useAppStore } from "./appStore";
 
@@ -16,6 +16,20 @@ function FetchAndSetClasses() {
   return null;
 }
 
+function useCreateClass() {
+  const createClassMutation = useMutation("classes:createClass" as any);
+
+  const createClass = async (newClass: any) => {
+    try {
+      await createClassMutation(newClass);
+    } catch (error) {
+      console.error("Failed to create class:", error);
+    }
+  };
+
+  return createClass;
+}
+
 function GradebookDataFetcher({
   gradebookUrl,
 }: {
@@ -24,12 +38,9 @@ function GradebookDataFetcher({
   if (!gradebookUrl) {
     return null;
   }
-  const convexOtherApp = new ConvexReactClient(gradebookUrl);
-  return (
-    <ConvexProvider client={convexOtherApp}>
-      <FetchAndSetClasses />
-    </ConvexProvider>
-  );
+  return <FetchAndSetClasses />;
 }
 
 export default GradebookDataFetcher;
+
+export { useCreateClass };

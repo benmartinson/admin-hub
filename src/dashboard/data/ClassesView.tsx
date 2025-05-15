@@ -14,9 +14,12 @@ const ClassesView = () => {
     <div className="flex flex-col w-full">
       <Navbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <div className="p-4 flex flex-col gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {filteredClasses.map((klass) => (
-            <div key={klass._id} className="p-6 rounded-lg shadow-lg bg-white">
+            <div
+              key={klass._id}
+              className="p-6 rounded-lg shadow-lg bg-white border-2 border-slate-200"
+            >
               <h3 className="text-xl font-semibold mb-2">{klass.name}</h3>
               {klass.startDate && (
                 <p className="text-sm text-gray-700 mb-1">

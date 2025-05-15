@@ -25,4 +25,4 @@ export type AppConfig = {
   appId: number;
 };
 
-export type DataTablesType = "Classes" | "Users" | "Grading Periods";
+export type DataTablesType = "Classes" | "Grading Periods" | "Assignment Types";

@@ -1,27 +1,25 @@
 import GradebookDataFetcher from "@/GradebookDataFetcher";
-import { AppConfig, DataTablesType } from "@/types";
-import DataTables from "./DataTables";
-import { useState } from "react";
-import GradingPeriodsView from "./GradingPeriodsView";
+import { AppConfig } from "@/types";
 import ClassesView from "./ClassesView";
-import UsersView from "./UsersView";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 const DataPage = ({ appConfig }: { appConfig: AppConfig }) => {
-  const [selectedTable, setSelectedTable] = useState<DataTablesType>("Classes");
-
+  const convexOtherApp = new ConvexReactClient(appConfig.convexUrl as string);
   return (
     <>
-      <GradebookDataFetcher gradebookUrl={appConfig.convexUrl} />
-      <div className="flex" style={{ scrollbarWidth: "none" }}>
-        <DataTables
-          selectedTable={selectedTable}
-          setSelectedTable={setSelectedTable}
-        />
-        <div className="flex h-screen w-full flex-3 border border-l-0 border-slate-200 bg-slate-50">
-          {selectedTable === "Classes" && <ClassesView />}
-          {selectedTable === "Users" && <UsersView />}
-          {selectedTable === "Grading Periods" && <GradingPeriodsView />}
+      <ConvexProvider client={convexOtherApp}>
+        <GradebookDataFetcher gradebookUrl={appConfig.convexUrl} />
+        <div className="flex" style={{ scrollbarWidth: "none" }}>
+          {/* <DataTables
+            selectedTable={selectedTable}
+            setSelectedTable={setSelectedTable}
+          /> */}
+          <div className="flex h-screen w-full flex-3 border-2 border-slate-200 bg-slate-50">
+            <ClassesView />
+            {/* {selectedTable === "Users" && <UsersView />} */}
+            {/* {selectedTable === "Grading Periods" && <GradingPeriodsView />} */}
+          </div>
         </div>
-      </div>
+      </ConvexProvider>
     </>
   );
 };

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import ClassFilterModal from "./ClassFilterModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import NewClassModal from "./NewClassModal";
 
 interface NavbarProps {
   searchTerm: string;
@@ -7,22 +10,25 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ searchTerm, onSearchChange }) => {
-  // Placeholder grading periods
   const gradingPeriods = ["Grading Period 1", "Grading Period 2", "All Year"];
   const [selectedGradingPeriod, setSelectedGradingPeriod] = useState(
     gradingPeriods[0],
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewClassModalOpen, setIsNewClassModalOpen] = useState(false);
 
   const handleApplyFilters = (selectedPeriod: string) => {
     setSelectedGradingPeriod(selectedPeriod);
     setIsModalOpen(false);
-    // Here you would typically apply the filter to your data
-    console.log("Filters applied:", selectedPeriod);
   };
 
   return (
-    <div className="bg-slate-100 border-b border-slate-200 p-4 w-full h-[58px] flex justify-end mx-auto flex items-center justify-end">
+    <div className="bg-slate-100 border-b border-slate-200 p-4 w-full h-[58px] flex justify-between mx-auto flex items-center">
+      <div className="flex items-center justify-start">
+        <button className="rounded-full bg-red-100 border-2 h-8 flex items-center justify-center border-red-200 p-2 text-sm text-red-500">
+          Classes
+        </button>
+      </div>
       <div className="flex items-center gap-4">
         <input
           type="text"
@@ -31,11 +37,10 @@ const Navbar: React.FC<NavbarProps> = ({ searchTerm, onSearchChange }) => {
           onChange={(e) => onSearchChange(e.target.value)}
           className="p-2 border bg-white w-64 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
         />
-        <button
+        {/* <button
           onClick={() => setIsModalOpen(true)}
           className="p-2 border border-gray-300 rounded-lg shadow-sm flex items-center gap-2 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
         >
-          {/* Placeholder for filter icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -51,9 +56,21 @@ const Navbar: React.FC<NavbarProps> = ({ searchTerm, onSearchChange }) => {
             />
           </svg>
           Filters
-        </button>
+        </button> */}
+        {/* We will add the ClassFilterModal component here later */}
+        <div
+          className="flex items-center gap-4 text-slate-500 rounded-full bg-white p-2 border border-slate-200 shadow-sm cursor-pointer"
+          onClick={() => setIsNewClassModalOpen(true)}
+        >
+          <FontAwesomeIcon icon={faPlus} />
+        </div>
       </div>
-      {/* We will add the ClassFilterModal component here later */}
+      {isNewClassModalOpen && (
+        <NewClassModal
+          isOpen={isNewClassModalOpen}
+          onClose={() => setIsNewClassModalOpen(false)}
+        />
+      )}
       {isModalOpen && (
         <ClassFilterModal
           isOpen={isModalOpen}

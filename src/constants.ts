@@ -17,6 +17,6 @@ export const navItems = [
 
 export const dataTables: DataTablesType[] = [
   "Classes",
-  "Users",
   "Grading Periods",
+  "Assignment Types",
 ];
