@@ -3,12 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./dashboard/DashboardPage";
 import SignInForm from "./auth/SignInForm";
 import Navbar from "./layout/Navbar";
-import { useState } from "react";
 import AccountPage from "./AccountPage";
 
 export default function App() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const [selectedTab, setSelectedTab] = useState<string>("View");
 
   if (isLoading) {
     return (
@@ -18,17 +16,17 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="flex flex-col h-screen bg-white top-0 left-0 right-0">
-        <Navbar
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-          isAuthenticated={isAuthenticated}
-        />
+      <div className="flex flex-col h-full min-h-screen bg-white top-0 left-0 right-0">
+        <Navbar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route
             path="/login"
             element={
-              !isAuthenticated ? <SignInForm /> : <Navigate to="/dashboard" />
+              !isAuthenticated ? (
+                <SignInForm />
+              ) : (
+                <Navigate to="/dashboard/view" />
+              )
             }
           />
           <Route
@@ -38,20 +36,16 @@ export default function App() {
             }
           />
           <Route
-            path="/dashboard"
+            path="/dashboard/*"
             element={
-              isAuthenticated ? (
-                <DashboardPage selectedTab={selectedTab} />
-              ) : (
-                <Navigate to="/login" />
-              )
+              isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />
             }
           />
           <Route
             path="/"
             element={
               isAuthenticated ? (
-                <Navigate to="/dashboard" />
+                <Navigate to="/dashboard/view" />
               ) : (
                 <Navigate to="/login" />
               )

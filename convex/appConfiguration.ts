@@ -29,6 +29,7 @@ export const createAppConfiguration = mutation({
     domain: v.string(),
     testUrl: v.string(),
     appId: v.number(),
+    convexUrl: v.string(),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -41,6 +42,7 @@ export const createAppConfiguration = mutation({
       domain: args.domain,
       testUrl: args.testUrl,
       appId: args.appId,
+      convexUrl: args.convexUrl,
     });
 
     return configId;
@@ -53,6 +55,7 @@ export const updateAppConfiguration = mutation({
     domain: v.string(),
     testUrl: v.string(),
     appId: v.number(),
+    convexUrl: v.string(),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -73,6 +76,7 @@ export const updateAppConfiguration = mutation({
       domain: args.domain,
       testUrl: args.testUrl,
       appId: args.appId,
+      convexUrl: args.convexUrl,
     });
 
     return args.id;

@@ -4,15 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 export default function Navbar({
-  selectedTab,
-  setSelectedTab,
   isAuthenticated,
 }: {
-  selectedTab: string;
-  setSelectedTab: (tab: string) => void;
   isAuthenticated: boolean;
 }) {
   const [showSidebarIcons, setShowSidebarIcons] = useState(true);
@@ -40,24 +36,29 @@ export default function Navbar({
 
   const handleLogoClick = () => {
     if (isAccountPage) {
-      navigate("/dashboard");
-      setSelectedTab("View");
+      navigate("/dashboard/view");
+    } else {
+      navigate("/dashboard/view");
     }
   };
 
   const isAccountPage = location.pathname.includes("/account");
 
-  const logoClasses = classNames("text-2xl font-light font-sans text-black", {
-    "cursor-pointer": isAccountPage,
-  });
+  const logoContent = (
+    <div className="text-2xl font-light font-sans text-black">SchoolAdmin</div>
+  );
 
   return (
     <>
       <div ref={navbarRef} className="flex flex-col">
         <div className="relative px-12 z-30 bg-light py-2 border-b border-slate-200 flex justify-between items-center">
-          <div className={logoClasses} onClick={handleLogoClick}>
-            SchoolAdmin
-          </div>
+          {isAccountPage ? (
+            <div className="cursor-pointer" onClick={handleLogoClick}>
+              {logoContent}
+            </div>
+          ) : (
+            <Link to="/dashboard/view">{logoContent}</Link>
+          )}
           {isAuthenticated && (
             <div className="flex gap-2 items-center px-4 py-1.5 border-2 border-slate-200 rounded-full shadow-md">
               <FontAwesomeIcon className="text-slate-500" icon={faBook} />
@@ -70,11 +71,7 @@ export default function Navbar({
         </div>
       </div>
       {isAuthenticated && !isAccountPage && (
-        <Sidebar
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-          showSidebarIcons={showSidebarIcons}
-        />
+        <Sidebar showSidebarIcons={showSidebarIcons} />
       )}
     </>
   );

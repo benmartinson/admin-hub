@@ -10,9 +10,10 @@ export default defineSchema({
 
   appConfiguration: defineTable({
     userId: v.id("users"),
-    domain: v.string(),
-    testUrl: v.string(),
+    domain: v.optional(v.string()),
+    testUrl: v.optional(v.string()),
     appId: v.number(),
+    convexUrl: v.optional(v.string()),
   })
     .index("by_user", ["userId"])
     .index("by_user_and_app", ["userId", "appId"]),

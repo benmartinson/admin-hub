@@ -1,5 +1,13 @@
 import { Id } from "../convex/_generated/dataModel";
 
+export type Klass = {
+  _id: Id<"classes">;
+  name: string;
+  teacher: string;
+  startDate: string;
+  endDate: string;
+};
+
 export type AppSetting = {
   _id: Id<"appSetting">;
   category: string;
@@ -7,4 +15,12 @@ export type AppSetting = {
   enabled: boolean;
   systemValue: string;
   teacherCanUpdate: boolean;
+};
+
+export type AppConfig = {
+  _id: Id<"appConfiguration">;
+  domain?: string;
+  testUrl?: string;
+  convexUrl?: string;
+  appId: number;
 };
