@@ -1,7 +1,7 @@
 import { Id } from "../convex/_generated/dataModel";
 
 export type Klass = {
-  _id: Id<"classes">;
+  _id: string;
   name: string;
   teacher: string;
   startDate: string;
@@ -24,3 +24,5 @@ export type AppConfig = {
   convexUrl?: string;
   appId: number;
 };
+
+export type DataTablesType = "Classes" | "Users" | "Grading Periods";

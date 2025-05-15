@@ -5,6 +5,7 @@ import {
   faWrench,
   faMountainSun,
 } from "@fortawesome/free-solid-svg-icons";
+import { DataTablesType } from "./types";
 
 export const navItems = [
   { name: "View", icon: faMountainSun },
@@ -12,4 +13,10 @@ export const navItems = [
   { name: "Reports", icon: faChartBar, isDisabled: true },
   { name: "Changes", icon: faExchangeAlt, isDisabled: true },
   { name: "Setup", icon: faWrench },
+];
+
+export const dataTables: DataTablesType[] = [
+  "Classes",
+  "Users",
+  "Grading Periods",
 ];

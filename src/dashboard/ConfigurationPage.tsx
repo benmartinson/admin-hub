@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useState } from "react";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -38,9 +38,9 @@ const ConfigurationPage = ({ appConfig }: { appConfig: AppConfig }) => {
     try {
       await updateConfig({
         id: appConfig._id,
-        domain: field === "domain" ? value : appConfig.domain,
-        testUrl: field === "testUrl" ? value : appConfig.testUrl,
-        convexUrl: field === "convexUrl" ? value : appConfig.convexUrl,
+        domain: field === "domain" ? value : appConfig.domain || "",
+        testUrl: field === "testUrl" ? value : appConfig.testUrl || "",
+        convexUrl: field === "convexUrl" ? value : appConfig.convexUrl || "",
         appId: appConfig.appId,
       });
       console.log({ field });
