@@ -21,7 +21,7 @@ const Category = ({ title, children, isExpanded, onToggle }: CategoryProps) => {
         )}
         <span className="font-medium text-slate-600">{title}</span>
       </button>
-      {isExpanded && <div className="px-8">{children}</div>}
+      {isExpanded && children}
     </div>
   );
 };

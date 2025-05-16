@@ -1,6 +1,16 @@
 import { useQuery, useMutation } from "convex/react";
 import { useEffect } from "react";
 import { useAppStore } from "./appStore";
+// import { Id } from "../convex/_generated/dataModel"; // Id might not be usable for external tables directly
+
+// Define a type for the class data, you might want to move this to a shared types file
+export type ClassData = {
+  _id?: string; // Using string for ID as "classes" might be an external table
+  name: string;
+  startDate: string;
+  endDate: string;
+  teacher: string;
+};
 
 function FetchAndSetClasses() {
   const classesFromOtherApp = useQuery("classes:getClasses" as any);
@@ -19,15 +29,37 @@ function FetchAndSetClasses() {
 function useCreateClass() {
   const createClassMutation = useMutation("classes:createClass" as any);
 
-  const createClass = async (newClass: any) => {
+  const createClass = async (newClass: Omit<ClassData, "_id">) => {
     try {
       await createClassMutation(newClass);
     } catch (error) {
       console.error("Failed to create class:", error);
+      throw error; // Re-throw error to handle it in the component
     }
   };
 
   return createClass;
+}
+
+// New hook to update a class
+function useUpdateClass() {
+  const updateClassMutation = useMutation("classes:updateClass" as any);
+
+  const updateClass = async (updatedClass: ClassData) => {
+    if (!updatedClass._id) {
+      console.error("Class ID is required for update.");
+      throw new Error("Class ID is required for update.");
+    }
+    try {
+      // The mutation should take the updatedClass object, which includes its _id
+      await updateClassMutation(updatedClass);
+    } catch (error) {
+      console.error("Failed to update class:", error);
+      throw error; // Re-throw error to handle it in the component
+    }
+  };
+
+  return updateClass;
 }
 
 function GradebookDataFetcher({
@@ -43,4 +75,4 @@ function GradebookDataFetcher({
 
 export default GradebookDataFetcher;
 
-export { useCreateClass };
+export { useCreateClass, useUpdateClass }; // Export new hooks

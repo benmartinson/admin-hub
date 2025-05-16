@@ -24,18 +24,14 @@ const Navbar: React.FC<NavbarProps> = ({ searchTerm, onSearchChange }) => {
 
   return (
     <div className="bg-slate-100 border-b border-slate-200 p-4 w-full h-[58px] flex justify-between mx-auto flex items-center">
-      <div className="flex items-center justify-start">
-        <button className="rounded-full bg-red-100 border-2 h-8 flex items-center justify-center border-red-200 p-2 text-sm text-red-500">
-          Classes
-        </button>
-      </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-start"></div>
+      <div className="flex items-center gap-4 w-full justify-between">
         <input
           type="text"
           placeholder="Search classes..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="p-2 border bg-white w-64 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className="p-2 border w-full bg-white w-64 border-gray-300 rounded-lg shadow-sm outline-none"
         />
         {/* <button
           onClick={() => setIsModalOpen(true)}
