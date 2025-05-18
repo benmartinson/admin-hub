@@ -4,10 +4,11 @@ import classNames from "classnames";
 import { useQuery } from "convex/react";
 import Category from "@/common/Category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Navbar from "./Navbar";
 import { useAppStore } from "@/appStore";
+import NewClassForm from "./NewClassForm";
 
 const TableCategory = ({
   label,
@@ -49,13 +50,18 @@ const ClassList = ({
 }) => {
   const { classes } = useAppStore();
   const [searchTerm, setSearchTerm] = useState("");
+  const [isAddingClass, setIsAddingClass] = useState(false);
   const filteredClasses =
     classes?.filter((klass) =>
       klass.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ) || [];
 
+  if (isAddingClass) {
+    return <NewClassForm closeForm={() => setIsAddingClass(false)} />;
+  }
+
   return (
-    <div className="bg-white border-2 border-r-1 border-slate-200">
+    <div className="bg-white border-2 border-r-0 border-slate-200">
       <Navbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <div className="w-96 relative">
         {filteredClasses?.map((klassItem, idx) => (
@@ -81,6 +87,12 @@ const ClassList = ({
             ))}
           </Category>
         ))}
+        <button
+          className="absolute -bottom-12 right-2 rounded-md h-12 bg-transparent flex justify-start items-center text-slate-400 hover:text-slate-500 text-sm p-2 cursor-pointer"
+          onClick={() => setIsAddingClass(true)}
+        >
+          <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Class
+        </button>
       </div>
     </div>
   );

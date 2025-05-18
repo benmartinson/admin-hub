@@ -3,6 +3,7 @@ import { Id } from "../convex/_generated/dataModel";
 export type Klass = {
   _id: string;
   name: string;
+  classCode: string;
   teacher: string;
   startDate: string;
   endDate: string;

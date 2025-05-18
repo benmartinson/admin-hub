@@ -54,19 +54,19 @@ const Navbar: React.FC<NavbarProps> = ({ searchTerm, onSearchChange }) => {
           Filters
         </button> */}
         {/* We will add the ClassFilterModal component here later */}
-        <div
+        {/* <div
           className="flex items-center gap-4 text-slate-500 rounded-full bg-white p-2 border border-slate-200 shadow-sm cursor-pointer"
           onClick={() => setIsNewClassModalOpen(true)}
         >
           <FontAwesomeIcon icon={faPlus} />
-        </div>
+        </div> */}
       </div>
-      {isNewClassModalOpen && (
+      {/* {isNewClassModalOpen && (
         <NewClassModal
           isOpen={isNewClassModalOpen}
           onClose={() => setIsNewClassModalOpen(false)}
         />
-      )}
+      )} */}
       {isModalOpen && (
         <ClassFilterModal
           isOpen={isModalOpen}

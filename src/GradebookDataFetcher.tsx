@@ -1,12 +1,11 @@
 import { useQuery, useMutation } from "convex/react";
 import { useEffect } from "react";
 import { useAppStore } from "./appStore";
-// import { Id } from "../convex/_generated/dataModel"; // Id might not be usable for external tables directly
 
-// Define a type for the class data, you might want to move this to a shared types file
 export type ClassData = {
-  _id?: string; // Using string for ID as "classes" might be an external table
+  _id?: string;
   name: string;
+  classCode: string;
   startDate: string;
   endDate: string;
   teacher: string;

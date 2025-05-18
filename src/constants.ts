@@ -14,4 +14,4 @@ export const navItems = [
   { name: "Setup", icon: faWrench },
 ];
 
-export const classDataTabs = ["Details", "Students", "Assignments", "Grades"];
+export const classDataTabs = ["Details", "Students"];

@@ -29,6 +29,7 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
     if (classDetails) {
       setFormData({
         name: classDetails.name,
+        classCode: classDetails.classCode,
         startDate: moment(classDetails.startDate).format("YYYY-MM-DD"),
         endDate: moment(classDetails.endDate).format("YYYY-MM-DD"),
         teacher: classDetails.teacher,
@@ -77,6 +78,10 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
       const payload = {
         _id: selectedClass,
         name: formData.name !== undefined ? formData.name : classDetails.name,
+        classCode:
+          formData.classCode !== undefined
+            ? formData.classCode
+            : classDetails.classCode,
         startDate: moment(
           formData.startDate !== undefined
             ? formData.startDate
@@ -169,6 +174,38 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
           </div>
           {fieldErrors.name && (
             <p className="mt-1 text-xs text-red-600">{fieldErrors.name}</p>
+          )}
+        </div>
+
+        {/* Class Code Field */}
+        <div>
+          <label
+            htmlFor="classCode"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Class Code
+          </label>
+          <div className="relative flex items-center">
+            <input
+              id="classCode"
+              name="classCode"
+              type="text"
+              required
+              value={formData.classCode || ""}
+              onChange={(e) => handleChange(e, "classCode")}
+              onBlur={() => handleFieldBlur("classCode")}
+              placeholder="e.g., MATH101"
+              className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full pr-8"
+            />
+            {successTimeouts["classCode"] &&
+              Date.now() - successTimeouts["classCode"] < 2000 && (
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-green-500">
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              )}
+          </div>
+          {fieldErrors.classCode && (
+            <p className="mt-1 text-xs text-red-600">{fieldErrors.classCode}</p>
           )}
         </div>
 
