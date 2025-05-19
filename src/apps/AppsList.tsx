@@ -19,12 +19,7 @@ const AppsList: React.FC = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 max-w-screen-xl mx-auto">
       {appNames.map((name) => (
-        <AppCard
-          key={name}
-          appName={name}
-          // Using the first letter as a placeholder icon
-          icon={name.charAt(0)}
-        />
+        <AppCard key={name} appName={name} icon={name.charAt(0)} />
       ))}
     </div>
   );

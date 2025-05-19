@@ -27,8 +27,6 @@ const AccountPage = () => {
       if (name !== (user.name || "")) setName(user.name || "");
       if (phone !== (user.phone || "")) setPhone(user.phone || "");
       if (email !== (user.email || "")) setEmail(user.email || "");
-      // Clear any active save icon when user data loads/reloads initially
-      // setLastSavedField(null); // Avoid clearing if user is actively editing and data re-fetches
     }
     return () => {
       if (saveSuccessTimeout) clearTimeout(saveSuccessTimeout);
@@ -43,7 +41,6 @@ const AccountPage = () => {
   ) => {
     if (!user) return;
 
-    // Clear previous error for this field
     setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
     if (errorClearTimeoutRef.current) {
       clearTimeout(errorClearTimeoutRef.current);
@@ -53,7 +50,6 @@ const AccountPage = () => {
     const currentValue = user[field] || "";
     if (value === currentValue) return;
 
-    // Specific email change error
     if (
       field === "email" &&
       user.email === "benmartinson92@gmail.com" &&
@@ -77,7 +73,7 @@ const AccountPage = () => {
       }, 2000);
     } catch (error) {
       console.error(`Failed to update ${field}:`, error);
-      setLastSavedField(null); // Clear checkmark on error
+      setLastSavedField(null);
       const errorMsg = `Failed to update ${field}.`;
       setFieldErrors((prev) => ({ ...prev, [field]: errorMsg }));
       errorClearTimeoutRef.current = setTimeout(() => {

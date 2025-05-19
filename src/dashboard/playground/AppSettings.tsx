@@ -42,7 +42,6 @@ const AppSettings = ({
     if (!displaySettings || displaySettings.length === 0) {
       return [];
     }
-    // Sort categories alphabetically for consistent UI
     return Array.from(
       new Set(displaySettings.map((setting) => setting.category)),
     ).sort();

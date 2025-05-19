@@ -16,7 +16,7 @@ const NewSettingForm = ({
     const snakeCaseValue = cleanedDescription
       .toLowerCase()
       .replace(/\s+/g, "_")
-      .replace(/[^a-z0-9_]/g, ""); // Remove any remaining non-alphanumeric characters except underscore
+      .replace(/[^a-z0-9_]/g, "");
     setSystemValue(snakeCaseValue);
   };
 

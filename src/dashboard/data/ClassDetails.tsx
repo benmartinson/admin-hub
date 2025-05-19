@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import { useAppStore } from "@/appStore";
 import { ClassItem } from "@/types";
-import { useUpdateClass } from "@/GradebookDataFetcher"; // Assuming ClassData is compatible with ClassItem
+import { useUpdateClass } from "@/GradebookDataFetcher";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -102,13 +102,11 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
 
       await updateClass(payload);
 
-      // Set the timestamp when the save was successful
       setSuccessTimeouts({
         ...successTimeouts,
         [fieldName]: Date.now(),
       });
 
-      // Clear this timestamp after 2 seconds
       setTimeout(() => {
         setSuccessTimeouts((prev) => ({
           ...prev,
@@ -132,7 +130,6 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
   }
 
   if (!classDetails) {
-    // Still loading or class not found in appStore
     return (
       <div className="p-8 text-center text-gray-500 w-full">
         Loading details or class not found...

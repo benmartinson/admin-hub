@@ -37,14 +37,13 @@ function useCreateClass() {
       await createClassMutation(newClass);
     } catch (error) {
       console.error("Failed to create class:", error);
-      throw error; // Re-throw error to handle it in the component
+      throw error;
     }
   };
 
   return createClass;
 }
 
-// New hook to update a class
 function useUpdateClass() {
   const updateClassMutation = useMutation("classes:updateClass" as any);
 
@@ -54,11 +53,10 @@ function useUpdateClass() {
       throw new Error("Class ID is required for update.");
     }
     try {
-      // The mutation should take the updatedClass object, which includes its _id
       await updateClassMutation(updatedClass);
     } catch (error) {
       console.error("Failed to update class:", error);
-      throw error; // Re-throw error to handle it in the component
+      throw error;
     }
   };
 
@@ -83,4 +81,4 @@ function GradebookDataFetcher({
 
 export default GradebookDataFetcher;
 
-export { useCreateClass, useUpdateClass }; // Export new hooks
+export { useCreateClass, useUpdateClass };

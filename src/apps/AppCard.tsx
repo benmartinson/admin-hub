@@ -2,8 +2,6 @@ import React from "react";
 
 interface AppCardProps {
   appName: string;
-  // For now, we'll use a placeholder for the icon.
-  // In the future, this could be an SVG component or an image URL.
   icon?: React.ReactNode;
 }
 
