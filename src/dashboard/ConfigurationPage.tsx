@@ -22,7 +22,6 @@ const ConfigurationPage = ({ appConfig }: { appConfig: AppConfig }) => {
     value: string,
   ) => {
     if (!appConfig) {
-      console.log({ field, value });
       await createConfig({
         domain: field === "domain" ? value : "",
         testUrl: field === "testUrl" ? value : "",
@@ -43,7 +42,6 @@ const ConfigurationPage = ({ appConfig }: { appConfig: AppConfig }) => {
         convexUrl: field === "convexUrl" ? value : appConfig.convexUrl || "",
         appId: appConfig.appId,
       });
-      console.log({ field });
       setLastSavedField(field);
       if (saveSuccessTimeout) clearTimeout(saveSuccessTimeout);
       setSaveSuccessTimeout(

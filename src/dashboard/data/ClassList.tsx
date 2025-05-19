@@ -1,5 +1,5 @@
 import { classDataTabs } from "@/constants";
-import { DataTablesType, Klass } from "@/types";
+import { DataTablesType, ClassItem } from "@/types";
 import classNames from "classnames";
 import { useQuery } from "convex/react";
 import Category from "@/common/Category";
@@ -52,8 +52,8 @@ const ClassList = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddingClass, setIsAddingClass] = useState(false);
   const filteredClasses =
-    classes?.filter((klass) =>
-      klass.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    classes?.filter((classItem) =>
+      classItem.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ) || [];
 
   if (isAddingClass) {
@@ -64,14 +64,15 @@ const ClassList = ({
     <div className="bg-white border-2 border-r-0 border-slate-200">
       <Navbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <div className="w-96 relative">
-        {filteredClasses?.map((klassItem, idx) => (
+        {filteredClasses?.map((classItem, idx) => (
           <Category
             key={idx}
-            title={klassItem.name}
-            isExpanded={selectedClass === klassItem._id}
+            title={classItem.name}
+            isExpanded={selectedClass === classItem._id}
             onToggle={() => {
+              setSelectedTab("Details");
               setSelectedClass(
-                selectedClass === klassItem._id ? null : klassItem._id,
+                selectedClass === classItem._id ? null : classItem._id,
               );
             }}
           >

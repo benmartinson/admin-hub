@@ -1,20 +1,24 @@
 import { useQuery, useMutation } from "convex/react";
 import { useEffect } from "react";
 import { useAppStore } from "./appStore";
+import { ClassData } from "./types";
 
-export type ClassData = {
-  _id?: string;
-  name: string;
-  classCode: string;
-  startDate: string;
-  endDate: string;
-  teacher: string;
-};
+function FetchAndSetEnrollments() {
+  const enrollmentsFromOtherApp = useQuery("enrollments:getEnrollments" as any);
+  const setEnrollments = useAppStore((state) => state.setEnrollments);
+
+  useEffect(() => {
+    if (enrollmentsFromOtherApp !== undefined) {
+      setEnrollments(enrollmentsFromOtherApp);
+    }
+  }, [enrollmentsFromOtherApp, setEnrollments]);
+
+  return null;
+}
 
 function FetchAndSetClasses() {
   const classesFromOtherApp = useQuery("classes:getClasses" as any);
   const setClasses = useAppStore((state) => state.setClasses);
-  console.log({ classesFromOtherApp });
 
   useEffect(() => {
     if (classesFromOtherApp !== undefined) {
@@ -69,7 +73,12 @@ function GradebookDataFetcher({
   if (!gradebookUrl) {
     return null;
   }
-  return <FetchAndSetClasses />;
+  return (
+    <>
+      <FetchAndSetClasses />
+      <FetchAndSetEnrollments />
+    </>
+  );
 }
 
 export default GradebookDataFetcher;

@@ -1,6 +1,6 @@
 import { Id } from "../convex/_generated/dataModel";
 
-export type Klass = {
+export type ClassItem = {
   _id: string;
   name: string;
   classCode: string;
@@ -24,6 +24,31 @@ export type AppConfig = {
   testUrl?: string;
   convexUrl?: string;
   appId: number;
+};
+
+export type Enrollment = {
+  _id: string;
+  studentId: string;
+  classId: string;
+  schoolYear: number;
+};
+
+export type ClassStudent = {
+  enrollmentId: string;
+  studentId: string;
+  classId: string;
+  schoolYear: number;
+  firstName: string;
+  lastName: string;
+};
+
+export type ClassData = {
+  _id?: string;
+  name: string;
+  classCode: string;
+  startDate: string;
+  endDate: string;
+  teacher: string;
 };
 
 export type DataTablesType = "Classes" | "Grading Periods" | "Assignment Types";

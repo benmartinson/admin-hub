@@ -1,23 +1,25 @@
 import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import { useAppStore } from "@/appStore";
-import { Klass } from "@/types";
-import { useUpdateClass } from "@/GradebookDataFetcher"; // Assuming ClassData is compatible with Klass
+import { ClassItem } from "@/types";
+import { useUpdateClass } from "@/GradebookDataFetcher"; // Assuming ClassData is compatible with ClassItem
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
   const { classes } = useAppStore();
   const updateClass = useUpdateClass();
-  const classDetails = classes.find((klass) => klass._id === selectedClass);
+  const classDetails = classes.find(
+    (classItem) => classItem._id === selectedClass,
+  );
 
-  const [formData, setFormData] = useState<Partial<Klass>>({});
+  const [formData, setFormData] = useState<Partial<ClassItem>>({});
   const [fieldErrors, setFieldErrors] = useState<
-    Partial<Record<keyof Omit<Klass, "_id">, string>>
+    Partial<Record<keyof Omit<ClassItem, "_id">, string>>
   >({});
 
   const [successTimeouts, setSuccessTimeouts] = useState<
-    Partial<Record<keyof Omit<Klass, "_id">, number | null>>
+    Partial<Record<keyof Omit<ClassItem, "_id">, number | null>>
   >({});
 
   const prevSelectedClassIdRef = useRef<string | null>(null);
@@ -48,7 +50,7 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof Omit<Klass, "_id">,
+    fieldName: keyof Omit<ClassItem, "_id">,
   ) => {
     const { value } = e.target;
     setFormData((prev) => ({ ...prev, [fieldName]: value }));
@@ -58,7 +60,7 @@ const ClassDetails = ({ selectedClass }: { selectedClass: string | null }) => {
     }
   };
 
-  const handleFieldBlur = async (fieldName: keyof Omit<Klass, "_id">) => {
+  const handleFieldBlur = async (fieldName: keyof Omit<ClassItem, "_id">) => {
     if (!selectedClass || !classDetails) return;
 
     const currentValue = formData[fieldName];
