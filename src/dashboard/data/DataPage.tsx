@@ -6,6 +6,7 @@ import { useState } from "react";
 import ClassDetails from "./ClassDetails";
 import ClassStudents from "./ClassStudents";
 import { useAppStore } from "@/appStore";
+import ClassView from "./ClassView";
 
 const DataPage = ({ appConfig }: { appConfig: AppConfig }) => {
   const convexOtherApp = new ConvexReactClient(appConfig.convexUrl as string);
@@ -28,16 +29,7 @@ const DataPage = ({ appConfig }: { appConfig: AppConfig }) => {
             setSelectedTab={setSelectedTab}
           />
           <div className="flex h-screen w-full flex-3 border-2 border-slate-200 bg-slate-50">
-            {classDetails && (
-              <>
-                {selectedTab === "Details" && (
-                  <ClassDetails selectedClass={selectedClass} />
-                )}
-                {selectedTab === "Students" && (
-                  <ClassStudents classDetails={classDetails} />
-                )}
-              </>
-            )}
+            {classDetails && <ClassView classDetails={classDetails} />}
           </div>
         </div>
       </ConvexProvider>
