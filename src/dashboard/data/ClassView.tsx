@@ -7,20 +7,14 @@ import NewClassEnrollmentModal from "./NewClassEnrollmentModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const ClassView = ({
-  selectedClass,
-  classDetails,
-}: {
-  selectedClass: string;
-  classDetails: ClassItem;
-}) => {
+const ClassView = ({ classDetails }: { classDetails: ClassItem }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="flex flex-col p-6 bg-white shadow w-full h-full overflow-hidden">
+    <div className="flex flex-col px-6 py-4 bg-white shadow w-full h-full overflow-hidden">
       <ClassDetails classDetails={classDetails} />
       <div className="flex justify-between items-center mt-4">
         <h2 className="text-lg text-slate-500">Class Enrollments</h2>
