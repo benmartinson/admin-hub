@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Doc } from "../../../convex/_generated/dataModel";
 import { useState, useEffect, useMemo } from "react";
+import { useAppStore } from "@/appStore";
 
 const AppView = ({
   appConfig,
@@ -13,9 +14,20 @@ const AppView = ({
 }) => {
   const [iframeError, setIframeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const domain = appConfig?.testUrl?.split("://")[1]?.split("/")[0];
+  const { appViewUrl, setAppViewUrl } = useAppStore();
+
+  useEffect(() => {
+    window.addEventListener("message", function (event) {
+      if (appConfig.domain && event?.origin?.includes(appConfig.domain)) {
+        console.log("Iframe navigated to:", event.data);
+        setAppViewUrl(event.data);
+      }
+    });
+  }, []);
 
   const validatedUrl = useMemo(() => {
-    let url = appConfig?.testUrl;
+    let url = appViewUrl || appConfig?.testUrl;
     if (url && typeof url === "string") {
       url = url.trim();
       if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -30,7 +42,7 @@ const AppView = ({
       return url;
     }
     return "";
-  }, [appConfig?.testUrl]);
+  }, [appConfig?.testUrl, appViewUrl]);
 
   useEffect(() => {
     if (!validatedUrl) {

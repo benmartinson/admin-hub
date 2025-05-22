@@ -27,7 +27,6 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
   // Mock update function (replace with real API call)
   const updateStudent = async (updatedStudent: Partial<Student>) => {
     // Replace this with your actual update function
-    console.log("Updating student:", updatedStudent);
     // Simulate successful update
     return Promise.resolve();
   };

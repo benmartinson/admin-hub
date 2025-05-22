@@ -6,6 +6,8 @@ interface AppState {
   setClasses: (classes: ClassItem[]) => void;
   enrollments: ClassStudent[];
   setEnrollments: (enrollments: ClassStudent[]) => void;
+  appViewUrl: string;
+  setAppViewUrl: (appViewUrl: string) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -18,6 +20,11 @@ export const useAppStore = create<AppState>((set) => ({
   setEnrollments: (enrollments) =>
     set({
       enrollments,
+    }),
+  appViewUrl: "",
+  setAppViewUrl: (appViewUrl) =>
+    set({
+      appViewUrl,
     }),
 }));
 

@@ -21,7 +21,6 @@ const ViewPage = () => {
   const appConfig = useQuery(api.appConfiguration.getAppConfiguration, {
     appId: 1,
   });
-  console.log(appConfig);
 
   if (!appConfig) {
     return <div className="text-center text-slate-400 w-full mt-16"></div>;
