@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Doc } from "../../../convex/_generated/dataModel";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useAppStore } from "@/appStore";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -17,17 +17,26 @@ const AppView = ({
   const [iframeError, setIframeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { appViewUrl, setAppViewUrl } = useAppStore();
+  const appViewUrlChanged = useRef(appViewUrl);
 
   const sessionId = useQuery(api.auth.getSessionId);
 
   useEffect(() => {
-    window.addEventListener("message", function (event) {
+    const handleMessage = (event: MessageEvent) => {
       if (appConfig.domain && event?.origin?.includes(appConfig.domain)) {
-        if (appViewUrl !== event.data) {
-          setAppViewUrl(event.data);
+        if (appViewUrlChanged.current !== event.data) {
+          appViewUrlChanged.current = event.data;
         }
       }
-    });
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      if (appViewUrlChanged.current !== appViewUrl) {
+        setAppViewUrl(appViewUrlChanged.current);
+      }
+    };
   }, []);
 
   const addParams = (url: string) => {
