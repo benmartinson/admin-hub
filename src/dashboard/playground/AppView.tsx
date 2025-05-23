@@ -2,6 +2,8 @@ import classNames from "classnames";
 import { Doc } from "../../../convex/_generated/dataModel";
 import { useState, useEffect, useMemo } from "react";
 import { useAppStore } from "@/appStore";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 const AppView = ({
   appConfig,
@@ -14,17 +16,31 @@ const AppView = ({
 }) => {
   const [iframeError, setIframeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const domain = appConfig?.testUrl?.split("://")[1]?.split("/")[0];
   const { appViewUrl, setAppViewUrl } = useAppStore();
+
+  const sessionId = useQuery(api.auth.getSessionId);
 
   useEffect(() => {
     window.addEventListener("message", function (event) {
       if (appConfig.domain && event?.origin?.includes(appConfig.domain)) {
-        console.log("Iframe navigated to:", event.data);
         setAppViewUrl(event.data);
       }
     });
   }, []);
+
+  const addParams = (url: string) => {
+    const domain = url.split("://")[1]?.split("/")[0];
+    let baseUrl = domain.includes("localhost")
+      ? `http://${domain}`
+      : `https://${domain}`;
+    let urlWithParams = baseUrl + `?parent_domain=${domain}`;
+
+    if (sessionId) {
+      urlWithParams = urlWithParams + `&admin_session_id=${sessionId}`;
+    }
+
+    return urlWithParams;
+  };
 
   const validatedUrl = useMemo(() => {
     let url = appViewUrl || appConfig?.testUrl;
@@ -36,13 +52,13 @@ const AppView = ({
           /^[a-zA-Z0-9.-]+:\d+/.test(url) ||
           !url.includes("://")
         ) {
-          return `http://${url}`;
+          return addParams(`http://${url}`);
         }
       }
-      return url;
+      return addParams(url);
     }
     return "";
-  }, [appConfig?.testUrl, appViewUrl]);
+  }, [appConfig?.testUrl, appViewUrl, sessionId]);
 
   useEffect(() => {
     if (!validatedUrl) {
