@@ -9,6 +9,12 @@ export type ClassItem = {
   endDate: string;
 };
 
+export type Student = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type AppSetting = {
   _id: Id<"appSetting">;
   category: string;

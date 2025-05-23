@@ -29,6 +29,19 @@ function FetchAndSetClasses() {
   return null;
 }
 
+function FetchAndSetStudents() {
+  const studentsFromOtherApp = useQuery("students:getAllStudents" as any);
+  const setStudents = useAppStore((state) => state.setStudents);
+
+  useEffect(() => {
+    if (studentsFromOtherApp !== undefined) {
+      setStudents(studentsFromOtherApp);
+    }
+  }, [studentsFromOtherApp, setStudents]);
+
+  return null;
+}
+
 function useCreateClass() {
   const createClassMutation = useMutation("classes:createClass" as any);
 
@@ -75,6 +88,7 @@ function GradebookDataFetcher({
     <>
       <FetchAndSetClasses />
       <FetchAndSetEnrollments />
+      <FetchAndSetStudents />
     </>
   );
 }

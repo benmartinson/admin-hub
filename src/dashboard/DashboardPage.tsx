@@ -23,7 +23,6 @@ const DashboardPage = () => {
             />
           </>
         )}
-        {/* Default route for /dashboard */}
         <Route index element={<Navigate to="view" replace />} />
       </Routes>
     </div>

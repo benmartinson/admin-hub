@@ -1,9 +1,11 @@
 import { create } from "zustand";
-import { ClassItem, ClassStudent, Enrollment } from "./types";
+import { ClassItem, ClassStudent, Student } from "./types";
 
 interface AppState {
   classes: ClassItem[];
   setClasses: (classes: ClassItem[]) => void;
+  students: Student[];
+  setStudents: (students: Student[]) => void;
   enrollments: ClassStudent[];
   setEnrollments: (enrollments: ClassStudent[]) => void;
   appViewUrl: string;
@@ -12,6 +14,7 @@ interface AppState {
 
 export const useAppStore = create<AppState>((set) => ({
   classes: [],
+  students: [],
   enrollments: [],
   setClasses: (classes) =>
     set({
@@ -20,6 +23,10 @@ export const useAppStore = create<AppState>((set) => ({
   setEnrollments: (enrollments) =>
     set({
       enrollments,
+    }),
+  setStudents: (students) =>
+    set({
+      students,
     }),
   appViewUrl: "",
   setAppViewUrl: (appViewUrl) =>

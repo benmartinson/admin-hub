@@ -1,26 +1,62 @@
+import { getClassStudents, useAppStore } from "@/appStore";
+import Modal from "@/common/components/Modal";
+import { ClassItem } from "@/types";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 interface NewClassEnrollmentModalProps {
+  isOpen: boolean;
   onClose: () => void;
+  classDetails: ClassItem;
 }
 
 const NewClassEnrollmentModal: React.FC<NewClassEnrollmentModalProps> = ({
+  isOpen,
   onClose,
+  classDetails,
 }) => {
+  const students = useAppStore((state) => state.students);
+  const enrollments = getClassStudents(classDetails._id);
+  console.log({ students });
+
+  const studentsNotEnrolled = students.filter(
+    (student) =>
+      !enrollments.some((enrollment) => enrollment.studentId === student._id),
+  );
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-xl">
-        <h2 className="text-xl font-semibold mb-4">New Class Enrollment</h2>
-        {/* Modal content will go here */}
-        <p>This is the New Class Enrollment Modal.</p>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Enroll a student in a class"
+    >
+      <div className="py-2">
+        <div className="h-64 overflow-y-auto space-y-2">
+          {studentsNotEnrolled.map((student) => (
+            <div
+              key={student._id}
+              className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer"
+            >
+              <span className="font-medium text-gray-800">
+                {student.firstName} {student.lastName}
+              </span>
+              <FontAwesomeIcon icon={faPlus} className="text-green" />
+            </div>
+          ))}
+          {studentsNotEnrolled.length === 0 && (
+            <div className="text-center text-gray-500 py-8">
+              No students available to enroll
+            </div>
+          )}
+        </div>
         <button
           onClick={onClose}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Close
         </button>
       </div>
-    </div>
+    </Modal>
   );
 };
 

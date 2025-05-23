@@ -27,7 +27,11 @@ const ClassView = ({ classDetails }: { classDetails: ClassItem }) => {
         </button>
       </div>
       <ClassStudents classDetails={classDetails} />
-      {isModalOpen && <NewClassEnrollmentModal onClose={closeModal} />}
+      <NewClassEnrollmentModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        classDetails={classDetails}
+      />
     </div>
   );
 };
