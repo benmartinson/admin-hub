@@ -8,10 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const ClassView = ({ classDetails }: { classDetails: ClassItem }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [isAdding, setIsAdding] = useState(false);
 
   return (
     <div className="flex flex-col px-6 py-4 bg-white shadow w-full h-full overflow-hidden">
@@ -19,18 +16,17 @@ const ClassView = ({ classDetails }: { classDetails: ClassItem }) => {
       <div className="flex justify-between items-center mt-4">
         <h2 className="text-lg text-slate-500">Class Enrollments</h2>
         <button
-          onClick={openModal}
+          onClick={() => setIsAdding(true)}
           className="text-green-600 hover:text-green-700 cursor-pointer h-10 w-10 flex items-center justify-center"
           aria-label="Add new class enrollment"
         >
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      <ClassStudents classDetails={classDetails} />
-      <NewClassEnrollmentModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
+      <ClassStudents
         classDetails={classDetails}
+        isAdding={isAdding}
+        setIsAdding={setIsAdding}
       />
     </div>
   );

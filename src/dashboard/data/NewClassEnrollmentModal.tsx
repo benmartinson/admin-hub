@@ -18,7 +18,6 @@ const NewClassEnrollmentModal: React.FC<NewClassEnrollmentModalProps> = ({
 }) => {
   const students = useAppStore((state) => state.students);
   const enrollments = getClassStudents(classDetails._id);
-  console.log({ students });
 
   const studentsNotEnrolled = students.filter(
     (student) =>

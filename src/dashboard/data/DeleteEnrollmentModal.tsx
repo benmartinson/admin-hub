@@ -13,7 +13,6 @@ const DeleteEnrollmentModal = ({
   onConfirm: () => void;
 }) => {
   const isDeleting = Boolean(!enrollment);
-  console.log({ enrollment });
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Delete Enrollment">
       <div className="flex flex-col gap-4">

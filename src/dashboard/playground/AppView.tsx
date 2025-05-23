@@ -108,7 +108,7 @@ const AppView = ({
     "border-3 border-slate-700 rounded-3xl": selectedScreenSize === "mobile",
   });
 
-  if (isLoading) {
+  if (isLoading || !sessionId) {
     return <div className={containerClasses}></div>;
   }
 

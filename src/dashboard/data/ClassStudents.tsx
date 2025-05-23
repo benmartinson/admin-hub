@@ -5,8 +5,17 @@ import { useState } from "react";
 import StudentDetails from "./StudentDetails";
 import { useMutation } from "convex/react";
 import DeleteEnrollmentModal from "./DeleteEnrollmentModal";
+import StudentSearchRow from "./StudentSearchRow";
 
-const ClassStudents = ({ classDetails }: { classDetails: ClassItem }) => {
+const ClassStudents = ({
+  classDetails,
+  isAdding,
+  setIsAdding,
+}: {
+  classDetails: ClassItem;
+  isAdding: boolean;
+  setIsAdding: (isAdding: boolean) => void;
+}) => {
   const enrollments = getClassStudents(classDetails._id);
   const removeEnrollmentMutation = useMutation(
     "enrollments:removeEnrollment" as any,
@@ -50,6 +59,12 @@ const ClassStudents = ({ classDetails }: { classDetails: ClassItem }) => {
           }}
         />
       ))}
+      {isAdding && (
+        <StudentSearchRow
+          classDetails={classDetails}
+          setIsAdding={setIsAdding}
+        />
+      )}
       <DeleteEnrollmentModal
         isOpen={isDeleteEnrollmentModalOpen}
         onClose={() => setIsDeleteEnrollmentModalOpen(false)}

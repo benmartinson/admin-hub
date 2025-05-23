@@ -11,7 +11,7 @@ const DashboardPage = () => {
   });
 
   return (
-    <div className="p-12 pt-4 h-full bg-[#FAFAFA]">
+    <div className="p-12 pt-4 h-full min-h-screen bg-[#FAFAFA]">
       <Routes>
         <Route path="view" element={<ViewPage />} />
         {appConfig && (
