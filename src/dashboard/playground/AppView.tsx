@@ -23,17 +23,18 @@ const AppView = ({
   useEffect(() => {
     window.addEventListener("message", function (event) {
       if (appConfig.domain && event?.origin?.includes(appConfig.domain)) {
-        setAppViewUrl(event.data);
+        if (appViewUrl !== event.data) {
+          setAppViewUrl(event.data);
+        }
       }
     });
   }, []);
 
   const addParams = (url: string) => {
-    const domain = url.split("://")[1]?.split("/")[0];
-    let baseUrl = domain.includes("localhost")
-      ? `http://${domain}`
-      : `https://${domain}`;
-    let urlWithParams = baseUrl + `?parent_domain=${domain}`;
+    const domain = window.location.origin;
+    let urlWithParams = domain.includes("localhost")
+      ? `${url}?parent_domain=${domain}`
+      : `${url}?parent_domain=${domain}`;
 
     if (sessionId) {
       urlWithParams = urlWithParams + `&admin_session_id=${sessionId}`;
