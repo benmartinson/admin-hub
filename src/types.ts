@@ -4,7 +4,6 @@ export type ClassItem = {
   _id: string;
   name: string;
   classCode: string;
-  teacher: string;
   startDate: string;
   endDate: string;
 };
@@ -54,7 +53,6 @@ export type ClassData = {
   classCode: string;
   startDate: string;
   endDate: string;
-  teacher: string;
 };
 
 export type DataTablesType = "Classes" | "Grading Periods" | "Assignment Types";

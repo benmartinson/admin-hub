@@ -90,10 +90,6 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
             ? formData.endDate
             : classDetails.endDate,
         ).format("YYYY-MM-DD"),
-        teacher:
-          formData.teacher !== undefined
-            ? formData.teacher
-            : classDetails.teacher,
       };
 
       await updateClass(payload);
@@ -134,7 +130,7 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
   }
 
   return (
-    <form className="grid grid-cols-3 gap-x-4 gap-y-3 w-2/3">
+    <form className="grid grid-cols-4 gap-x-4 gap-y-3 w-fit">
       <div>
         <label
           htmlFor="name"
@@ -256,37 +252,6 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
         </div>
         {fieldErrors.endDate && (
           <p className="mt-1 text-xs text-red-600">{fieldErrors.endDate}</p>
-        )}
-      </div>
-
-      {/* Teacher Field */}
-      <div className="col-span-1">
-        <label
-          htmlFor="teacher"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Teacher
-        </label>
-        <div className="relative flex items-center">
-          <input
-            id="teacher"
-            name="teacher"
-            type="text"
-            value={formData.teacher || ""}
-            onChange={(e) => handleChange(e, "teacher")}
-            onBlur={() => handleFieldBlur("teacher")}
-            placeholder="e.g., John Smith"
-            className="px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-8"
-          />
-          {successTimeouts["teacher"] &&
-            Date.now() - successTimeouts["teacher"] < 2000 && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-green-500">
-                <FontAwesomeIcon icon={faCheck} />
-              </span>
-            )}
-        </div>
-        {fieldErrors.teacher && (
-          <p className="mt-1 text-xs text-red-600">{fieldErrors.teacher}</p>
         )}
       </div>
     </form>
