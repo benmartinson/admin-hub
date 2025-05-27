@@ -234,9 +234,6 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
                       Code: {classItem.classCode}
                     </p>
                   </div>
-                  <div className="text-sm text-gray-500">
-                    Teacher: {classItem.teacher}
-                  </div>
                 </div>
               ))}
             </div>

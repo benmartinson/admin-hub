@@ -8,7 +8,6 @@ const NewClassForm = ({ closeForm }: { closeForm: () => void }) => {
     name: "",
     startDate: moment().format("YYYY-MM-DD"),
     endDate: moment().add(1, "month").format("YYYY-MM-DD"),
-    teacher: "",
     classCode: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +23,6 @@ const NewClassForm = ({ closeForm }: { closeForm: () => void }) => {
       !formData.name ||
       !formData.startDate ||
       !formData.endDate ||
-      !formData.teacher ||
       !formData.classCode
     ) {
       return;
@@ -36,7 +34,6 @@ const NewClassForm = ({ closeForm }: { closeForm: () => void }) => {
         name: formData.name,
         startDate: moment(formData.startDate).format("YYYY-MM-DD"),
         endDate: moment(formData.endDate).format("YYYY-MM-DD"),
-        teacher: formData.teacher,
         classCode: formData.classCode,
       });
       closeForm();
@@ -112,25 +109,6 @@ const NewClassForm = ({ closeForm }: { closeForm: () => void }) => {
               required
               value={formData.endDate}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="teacher"
-              className="block text-sm font-medium text-slate-600 mb-1"
-            >
-              Teacher
-            </label>
-            <input
-              id="teacher"
-              name="teacher"
-              type="text"
-              required
-              value={formData.teacher}
-              onChange={handleChange}
-              placeholder="e.g., John Smith"
               className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>

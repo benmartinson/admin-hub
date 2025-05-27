@@ -30,14 +30,13 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
         classCode: classDetails.classCode,
         startDate: moment(classDetails.startDate).format("YYYY-MM-DD"),
         endDate: moment(classDetails.endDate).format("YYYY-MM-DD"),
-        teacher: classDetails.teacher,
       });
 
       if (hasSelectedClassIdChanged) {
         setFieldErrors({});
       }
     } else if (!classId) {
-      setFormData({ name: "", startDate: "", endDate: "", teacher: "" });
+      setFormData({ name: "", startDate: "", endDate: "" });
       setFieldErrors({});
     }
 
