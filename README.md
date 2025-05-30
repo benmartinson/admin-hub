@@ -1,6 +1,6 @@
 #### The Idea
 
-To empower a school admin to completely control the software that powers their school. They own the code to the [Gradebook](https://github.com/benmartinson/gradebook), as it's meant to be an open source tool. AdminHub (aka SchoolAdmin) helps them manage the Gradebook code, and all the data and customizations used by it. 
+To empower a school admin to completely control the software that powers their school. They own the code to the gradebook, as it's meant to be an open source tool. AdminHub (aka SchoolAdmin) helps them manage the Gradebook code, and all the data and customizations used by it. 
 
 #### Why?
 
@@ -10,8 +10,6 @@ Having worked for EdTech SaaS companies, I know that a major limitation for scho
 
 As AI continues to progress, and makes it easier to code, school admins, or the IT teams, will be to maintain the software themselves. They just need guidance and a foundation to work with.
 
-### Try it
-https://admin-hub-sepia.vercel.app/dashboard
 
 ### Test credentials
 ```
@@ -19,21 +17,10 @@ Email: benmartinson92@gmail.com
 Password: Test123!
 ```
 
-#
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/ed5cd92e-d8f3-4c29-9f34-9602d7259e55" />
-
----
-
-<img width="1434" alt="image" src="https://github.com/user-attachments/assets/f111106d-1ecb-4c93-b749-835bc2b83669" />
-
-
----
-
 ### Admin Tools
 ##### Customizations
-Admins can keep track of all the settings that are available for the Gradebook. The Gradebook fetches these settings and conditionally renders based on them. The idea is that the admin would add settings and then would actually change the Gradebook code to account for them. They can also choose to allow the teacher to switch on/off these settings from within the gradebook (not yet implemented).
+Admins can keep track of all the settings that are available for the Gradebook. The Gradebook fetches these settings and conditionally renders based on them. The idea is that the admin would add settings and then would actually change the Gradebook code to account for them. They can also choose to allow the teacher to switch on/off these settings from within the gradebook.
 
-<img width="808" alt="image" src="https://github.com/user-attachments/assets/94cd0a59-d48a-45ae-a8ab-a7fa9c4be029" />
 
 ##### School data (not yet implemented fully)
 
