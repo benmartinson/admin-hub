@@ -29,19 +29,19 @@ const SignInForm = () => {
           }}
         >
           <input
-            className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+            className="bg-white rounded-md p-2 border-2 border-slate-200"
             type="email"
             name="email"
             placeholder="Email"
           />
           <input
-            className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+            className="bg-white rounded-md p-2 border-2 border-slate-200"
             type="password"
             name="password"
             placeholder="Password"
           />
           <button
-            className="bg-slate-700 dark:bg-light text-light dark:text-dark rounded-md py-2"
+            className="bg-slate-700 rounded-md py-2 text-white"
             type="submit"
           >
             {flow === "signIn" ? "Sign in" : "Sign up"}
@@ -53,23 +53,21 @@ const SignInForm = () => {
                 : "Already have an account?"}
             </span>
             <span
-              className="text-dark dark:text-light underline hover:no-underline cursor-pointer"
+              className=" underline hover:no-underline cursor-pointer text-white"
               onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
             >
               {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
             </span>
           </div>
           <span
-            className="text-dark dark:text-light underline hover:no-underline cursor-pointer mt-2"
+            className=" underline hover:no-underline cursor-pointer mt-2"
             onClick={() => setFlow("resetPassword")}
           >
             Forgot password?
           </span>
           {error && (
             <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-              <p className="text-dark dark:text-light font-mono text-xs">
-                Error signing in: {error}
-              </p>
+              <p className=" font-mono text-xs">Error signing in: {error}</p>
             </div>
           )}
         </form>

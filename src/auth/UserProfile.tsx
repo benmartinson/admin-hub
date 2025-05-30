@@ -14,7 +14,7 @@ const UserProfile = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
   const classes = classNames(
-    "w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-dark font-semibold",
+    "w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center  font-semibold",
     {
       "cursor-default opacity-0": !isAuthenticated,
     },
@@ -69,14 +69,14 @@ const UserProfile = () => {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-1 w-48 bg-light rounded-md shadow-lg py-1 border-2 border-slate-200 z-50"
+          className="absolute right-0 mt-1 w-48 rounded-md shadow-lg py-1 border-2 border-slate-200 z-50 bg-white"
         >
           <button
             onClick={() => {
               navigate("/account");
               setIsOpen(false);
             }}
-            className="block w-full text-left px-4 py-2 text-sm text-dark hover:bg-slate-100"
+            className="block w-full text-left px-4 py-2 text-sm  hover:bg-slate-100"
           >
             Account
           </button>
@@ -85,7 +85,7 @@ const UserProfile = () => {
               void signOut();
               setIsOpen(false);
             }}
-            className="block w-full text-left px-4 py-2 text-sm text-dark hover:bg-slate-100"
+            className="block w-full text-left px-4 py-2 text-sm  hover:bg-slate-100"
           >
             Sign Out
           </button>

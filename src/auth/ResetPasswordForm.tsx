@@ -43,36 +43,32 @@ const ResetPasswordForm = ({ setFlow }: ResetPasswordFormProps) => {
       }}
     >
       <input
-        className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+        className="bg-white rounded-md p-2 border-2 border-slate-200"
         type="email"
         name="email"
         placeholder="Email"
         required
       />
       <button
-        className="bg-slate-700 dark:bg-light text-light dark:text-dark rounded-md py-2"
+        className="bg-slate-700  rounded-md py-2 text-white"
         type="submit"
       >
         Send password reset code
       </button>
       <span
-        className="text-dark dark:text-light underline hover:no-underline cursor-pointer mt-2"
+        className=" underline hover:no-underline cursor-pointer mt-2 text-white"
         onClick={() => setFlow("signIn")}
       >
         Back to sign in
       </span>
       {resetError && (
         <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-          <p className="text-dark dark:text-light font-mono text-xs">
-            {resetError}
-          </p>
+          <p className=" font-mono text-xs">{resetError}</p>
         </div>
       )}
       {resetInfo && (
         <div className="bg-green-500/20 border-2 border-green-500/50 rounded-md p-2">
-          <p className="text-dark dark:text-light font-mono text-xs">
-            {resetInfo}
-          </p>
+          <p className=" font-mono text-xs">{resetInfo}</p>
         </div>
       )}
     </form>
@@ -122,7 +118,7 @@ const ResetPasswordForm = ({ setFlow }: ResetPasswordFormProps) => {
       <div>
         <input
           id="verification_code"
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800 w-full"
+          className="  rounded-md p-2 border-2 border-slate-200 w-full"
           type="text"
           name="verification_code"
           defaultValue=""
@@ -134,7 +130,7 @@ const ResetPasswordForm = ({ setFlow }: ResetPasswordFormProps) => {
       <div>
         <input
           id="newPassword"
-          className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800 w-full"
+          className="  rounded-md p-2 border-2 border-slate-200 w-full"
           type="password"
           name="newPassword"
           placeholder="New password"
@@ -142,14 +138,11 @@ const ResetPasswordForm = ({ setFlow }: ResetPasswordFormProps) => {
           required
         />
       </div>
-      <button
-        className="bg-slate-700 dark:bg-light text-light dark:text-dark rounded-md py-2"
-        type="submit"
-      >
+      <button className="bg-slate-700 text-white rounded-md py-2" type="submit">
         Reset password
       </button>
       <span
-        className="text-dark dark:text-light underline hover:no-underline cursor-pointer mt-2"
+        className=" underline hover:no-underline cursor-pointer mt-2"
         onClick={() => {
           setResetStep("request");
           setResetEmail("");
@@ -159,16 +152,12 @@ const ResetPasswordForm = ({ setFlow }: ResetPasswordFormProps) => {
       </span>
       {resetError && (
         <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-          <p className="text-dark dark:text-light font-mono text-xs">
-            {resetError}
-          </p>
+          <p className=" font-mono text-xs">{resetError}</p>
         </div>
       )}
       {resetInfo && (
         <div className="bg-green-500/20 border-2 border-green-500/50 rounded-md p-2">
-          <p className="text-dark dark:text-light font-mono text-xs">
-            {resetInfo}
-          </p>
+          <p className=" font-mono text-xs">{resetInfo}</p>
         </div>
       )}
     </form>

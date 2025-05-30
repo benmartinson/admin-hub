@@ -50,7 +50,7 @@ export default function Navbar({
   return (
     <>
       <div ref={navbarRef} className="flex flex-col">
-        <div className="relative px-12 z-30 bg-light py-2 border-b border-slate-200 flex justify-between items-center">
+        <div className="relative px-12 z-30 bg-white py-2 border-b border-slate-200 flex justify-between items-center">
           <div className="flex w-1/3 justify-start">
             {isAccountPage ? (
               <div className="cursor-pointer" onClick={handleLogoClick}>

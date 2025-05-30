@@ -22,29 +22,26 @@ const SignUpForm = ({ setFlow }: SignUpFormProps) => {
       }}
     >
       <input
-        className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+        className="bg-white rounded-md p-2 border-2 border-slate-200"
         type="email"
         name="email"
         placeholder="Email"
         required
       />
       <input
-        className="bg-light dark:bg-dark text-dark dark:text-light rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+        className="bg-white rounded-md p-2 border-2 border-slate-200"
         type="password"
         name="password"
         placeholder="Password"
         required
       />
-      <button
-        className="bg-slate-700 dark:bg-light text-light dark:text-dark rounded-md py-2"
-        type="submit"
-      >
+      <button className="bg-slate-700 text-white rounded-md py-2" type="submit">
         Sign up
       </button>
       <div className="flex flex-row gap-2">
         <span>Already have an account?</span>
         <span
-          className="text-dark dark:text-light underline hover:no-underline cursor-pointer"
+          className=" underline hover:no-underline cursor-pointer text-white"
           onClick={() => setFlow("signIn")}
         >
           Sign in instead
@@ -52,9 +49,7 @@ const SignUpForm = ({ setFlow }: SignUpFormProps) => {
       </div>
       {error && (
         <div className="bg-red-500/20 border-2 border-red-500/50 rounded-md p-2">
-          <p className="text-dark dark:text-light font-mono text-xs">
-            Error signing up: {error}
-          </p>
+          <p className=" font-mono text-xs">Error signing up: {error}</p>
         </div>
       )}
     </form>
