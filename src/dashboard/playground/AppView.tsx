@@ -95,7 +95,7 @@ const AppView = ({
   }, [validatedUrl]);
 
   const containerClasses = classNames(
-    "flex h-screen w-full flex-3 border border-slate-200",
+    "flex h-screen min-h-[750px] w-full flex-3 border border-slate-200",
     {
       "px-60 py-8 bg-slate-200":
         selectedScreenSize === "mobile" && !iframeError && !isLoading,

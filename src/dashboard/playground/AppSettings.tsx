@@ -73,27 +73,19 @@ const AppSettings = ({
   return (
     <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
       <AppSettingHeader />
-      {uniqueCategories.map((category) => (
-        <Category
-          key={category}
-          title={category}
-          isExpanded={!!expandedCategories[category]}
-          onToggle={() => toggleCategory(category)}
-        >
-          {displaySettings
-            .filter((setting) => setting.category === category)
-            .map((setting) => (
-              <ToggleSetting
-                key={setting._id.toString()}
-                label={setting.descriptionLabel}
-                value={setting.enabled}
-                onChange={(value) => handleChangeEnabled(setting._id, value)}
-                setIsEditing={() => setEditingSettingId(setting._id)}
-              />
-            ))}
-        </Category>
-      ))}
+
       <AddSettingButton setIsAddingSetting={setIsAddingSetting} />
+      <div className="py-2">
+        {displaySettings.map((setting) => (
+          <ToggleSetting
+            key={setting._id.toString()}
+            label={setting.descriptionLabel}
+            value={setting.enabled}
+            onChange={(value) => handleChangeEnabled(setting._id, value)}
+            setIsEditing={() => setEditingSettingId(setting._id)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
