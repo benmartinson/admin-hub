@@ -1,4 +1,4 @@
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useState } from "react";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -6,16 +6,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AppConfig } from "@/types";
 
 const ConfigurationPage = ({ appConfig }: { appConfig: AppConfig }) => {
+  const currentUser = useQuery(api.users.currentUser);
   const [domain, setDomain] = useState(appConfig?.domain || "");
   const [testUrl, setTestUrl] = useState(appConfig?.testUrl || "");
   const [convexUrl, setConvexUrl] = useState(appConfig?.convexUrl || "");
+  const [convexUrlInput, setConvexUrlInput] = useState("");
+  const [isEditingConvexUrl, setIsEditingConvexUrl] = useState(false);
   const [lastSavedField, setLastSavedField] = useState<
     "domain" | "testUrl" | "convexUrl" | null
   >(null);
   const [saveSuccessTimeout, setSaveSuccessTimeout] =
     useState<NodeJS.Timeout | null>(null);
+  const [convexUrlError, setConvexUrlError] = useState("");
   const createConfig = useMutation(api.appConfiguration.createAppConfiguration);
   const updateConfig = useMutation(api.appConfiguration.updateAppConfiguration);
+  
+  const isConvexUrlBlocked = currentUser?.email === "benmartinson92@gmail.com";
 
   const handleFieldBlur = async (
     field: "domain" | "testUrl" | "convexUrl",
@@ -114,22 +120,82 @@ const ConfigurationPage = ({ appConfig }: { appConfig: AppConfig }) => {
         >
           Convex URL
         </label>
-        <div className="relative w-1/2 flex items-center">
-          <input
-            type="text"
-            id="convexUrl"
-            className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none"
-            placeholder="Enter your Convex deployment URL"
-            value={convexUrl}
-            onBlur={() => handleFieldBlur("convexUrl", convexUrl)}
-            onChange={(e) => setConvexUrl(e.target.value)}
-          />
-          {lastSavedField === "convexUrl" && (
-            <span className="absolute right-2 top-1/2 -translate-y-1/2 mt-0.5 text-green-500">
+        <div className="relative w-1/2 flex items-center gap-2">
+          {!isEditingConvexUrl && convexUrl ? (
+            <>
+              <div className="flex-1 px-3 py-2 bg-gray-50 border border-slate-300 rounded-md">
+                <span className="text-slate-600">••••••••••••</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsEditingConvexUrl(true);
+                  setConvexUrlInput("");
+                  setConvexUrlError("");
+                }}
+                className="text-sm text-blue-600 hover:text-blue-800"
+              >
+                Edit
+              </button>
+            </>
+          ) : (
+            <>
+              <input
+                type="password"
+                id="convexUrl"
+                className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none"
+                placeholder="Enter your Convex deployment URL"
+                value={convexUrlInput}
+                onChange={(e) => setConvexUrlInput(e.target.value)}
+                autoFocus={isEditingConvexUrl}
+              />
+              {(isEditingConvexUrl || !convexUrl) && (
+                <>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (isConvexUrlBlocked) {
+                        setConvexUrlError("You don't have permission to change this field");
+                        return;
+                      }
+                      if (convexUrlInput) {
+                        await handleFieldBlur("convexUrl", convexUrlInput);
+                        setConvexUrl(convexUrlInput);
+                      }
+                      setConvexUrlInput("");
+                      setIsEditingConvexUrl(false);
+                      setConvexUrlError("");
+                    }}
+                    className="text-sm text-green-600 hover:text-green-800"
+                  >
+                    Save
+                  </button>
+                  {convexUrl && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setConvexUrlInput("");
+                        setIsEditingConvexUrl(false);
+                        setConvexUrlError("");
+                      }}
+                      className="text-sm text-gray-600 hover:text-gray-800"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </>
+              )}
+            </>
+          )}
+          {lastSavedField === "convexUrl" && !isEditingConvexUrl && (
+            <span className="text-green-500">
               <FontAwesomeIcon icon={faCheck} />
             </span>
           )}
         </div>
+        {convexUrlError && (
+          <p className="mt-1 text-sm text-red-600">{convexUrlError}</p>
+        )}
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ const SignInForm = () => {
           >
             {flow === "signIn" ? "Sign in" : "Sign up"}
           </button>
-          <div className="flex flex-row gap-2">
+          {/* <div className="flex flex-row gap-2">
             <span>
               {flow === "signIn"
                 ? "Don't have an account?"
@@ -58,7 +58,7 @@ const SignInForm = () => {
             >
               {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
             </span>
-          </div>
+          </div> */}
           <span
             className=" underline hover:no-underline cursor-pointer mt-2"
             onClick={() => setFlow("resetPassword")}
