@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { useCreateClass } from "@/GradebookDataFetcher";
+import { useMutation } from "convex/react";
 
 const NewClassForm = ({ closeForm }: { closeForm: () => void }) => {
-  const createClass = useCreateClass();
+  const createClass = useMutation("classes:createClass" as any);
   const [formData, setFormData] = useState({
     name: "",
     startDate: moment().format("YYYY-MM-DD"),

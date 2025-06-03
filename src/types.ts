@@ -47,6 +47,15 @@ export type ClassStudent = {
   lastName: string;
 };
 
+export type ClassTeacher = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  classTeacherId: string;
+};
+
 export type ClassData = {
   _id?: string;
   name: string;

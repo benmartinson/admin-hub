@@ -1,5 +1,5 @@
 import Modal from "@/common/components/Modal";
-import { useCreateClass } from "@/GradebookDataFetcher";
+import { useMutation } from "convex/react";
 import { useState } from "react";
 import moment from "moment";
 const NewClassModal = ({
@@ -9,7 +9,7 @@ const NewClassModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const createClass = useCreateClass();
+  const createClass = useMutation("classes:createClass" as any);
   const [formData, setFormData] = useState({
     name: "",
     code: "",

@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import moment from "moment";
-import { useAppStore } from "@/appStore";
 import { ClassItem } from "@/types";
-import { useUpdateClass } from "@/GradebookDataFetcher";
+import { useMutation } from "convex/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
-  const updateClass = useUpdateClass();
+  const updateClass = useMutation("classes:updateClass" as any);
   const [formData, setFormData] = useState<Partial<ClassItem>>({});
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<keyof Omit<ClassItem, "_id">, string>>

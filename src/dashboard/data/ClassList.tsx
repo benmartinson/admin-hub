@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { useAppStore } from "@/appStore";
 import NewClassForm from "./NewClassForm";
 import { ChevronDown } from "lucide-react";
 import { ChevronRight } from "lucide-react";
@@ -50,11 +49,11 @@ const ClassList = ({
   selectedTab: string | null;
   setSelectedTab: (selectedTab: string | null) => void;
 }) => {
-  const { classes } = useAppStore();
+  const classes = useQuery("classes:getClasses" as any) || [];
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddingClass, setIsAddingClass] = useState(false);
   const filteredClasses =
-    classes?.filter((classItem) =>
+    classes?.filter((classItem: ClassItem) =>
       classItem.name.toLowerCase().includes(searchTerm.toLowerCase()),
     ) || [];
 

@@ -1,9 +1,8 @@
-import { getClassStudents } from "@/appStore";
 import StudentInfo from "./StudentInfo";
 import { ClassItem, ClassStudent } from "@/types";
 import { useState } from "react";
 import StudentDetails from "./StudentDetails";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import DeleteEnrollmentModal from "./DeleteEnrollmentModal";
 import StudentSearchRow from "./StudentSearchRow";
 
@@ -16,7 +15,10 @@ const ClassStudents = ({
   isAdding: boolean;
   setIsAdding: (isAdding: boolean) => void;
 }) => {
-  const enrollments = getClassStudents(classDetails._id);
+  const enrollments = useQuery("enrollments:getEnrollments" as any) || [];
+  const classStudents = enrollments.filter(
+    (enrollment: ClassStudent) => enrollment.classId === classDetails._id
+  );
   const removeEnrollmentMutation = useMutation(
     "enrollments:removeEnrollment" as any,
   );
@@ -48,7 +50,7 @@ const ClassStudents = ({
 
   return (
     <div className="flex-grow overflow-y-auto px-4 pb-4 border-y border-slate-200">
-      {enrollments.map((enrollment) => (
+      {classStudents.map((enrollment) => (
         <StudentInfo
           key={enrollment.studentId}
           student={enrollment}

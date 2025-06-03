@@ -1,39 +1,44 @@
-import GradebookDataFetcher from "@/GradebookDataFetcher";
 import { AppConfig, ClassItem } from "@/types";
 import { ConvexProvider, ConvexReactClient, useQuery } from "convex/react";
 import ClassList from "./ClassList";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ClassDetails from "./ClassDetails";
 import ClassStudents from "./ClassStudents";
-import { useAppStore } from "@/appStore";
 import ClassView from "./ClassView";
 
-const DataPage = ({ appConfig }: { appConfig: AppConfig }) => {
-  const convexOtherApp = new ConvexReactClient(appConfig.convexUrl as string);
+const DataPageContent = () => {
   const [selectedClass, setSelectedClass] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string | null>("Details");
-  const { classes } = useAppStore();
+  const classes = useQuery("classes:getClasses" as any) || [];
   const classDetails = classes.find(
-    (classItem) => classItem._id === selectedClass,
+    (classItem: ClassItem) => classItem._id === selectedClass,
   );
 
   return (
-    <>
-      <ConvexProvider client={convexOtherApp}>
-        <GradebookDataFetcher gradebookUrl={appConfig.convexUrl} />
-        <div className="flex" style={{ scrollbarWidth: "none" }}>
-          <ClassList
-            selectedClass={selectedClass}
-            setSelectedClass={setSelectedClass}
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-          />
-          <div className="flex h-screen w-full flex-3 border-2 border-slate-200 bg-slate-50">
-            {classDetails && <ClassView classDetails={classDetails} />}
-          </div>
-        </div>
-      </ConvexProvider>
-    </>
+    <div className="flex" style={{ scrollbarWidth: "none" }}>
+      <ClassList
+        selectedClass={selectedClass}
+        setSelectedClass={setSelectedClass}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
+      <div className="flex h-screen w-full flex-3 border-2 border-slate-200 bg-slate-50">
+        {classDetails && <ClassView classDetails={classDetails} />}
+      </div>
+    </div>
+  );
+};
+
+const DataPage = ({ appConfig }: { appConfig: AppConfig }) => {
+  const convexOtherApp = useMemo(
+    () => new ConvexReactClient(appConfig.convexUrl as string),
+    [appConfig.convexUrl]
+  );
+
+  return (
+    <ConvexProvider client={convexOtherApp}>
+      <DataPageContent />
+    </ConvexProvider>
   );
 };
 

@@ -6,8 +6,6 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { ClassItem, ClassStudent } from "@/types";
-import { getClassStudents } from "@/appStore";
-import { useAppStore } from "@/appStore";
 import { useMutation } from "convex/react";
 import { useEffect, useState } from "react";
 
