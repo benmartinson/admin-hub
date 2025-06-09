@@ -2,7 +2,7 @@ const AppSettingHeader = () => {
   return (
     <div className="border-b border-slate-200">
       <div className="w-full flex items-center p-4 bg-white">
-        <span className="font-medium text-slate-500">Customizations</span>
+        <span className="font-medium text-slate-500">Global Settings</span>
       </div>
     </div>
   );
