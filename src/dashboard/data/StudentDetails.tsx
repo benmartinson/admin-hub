@@ -1,18 +1,16 @@
 import { useEffect, useState, useRef } from "react";
-import { useAppStore } from "@/appStore";
 import { ClassStudent } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useQuery } from "convex/react";
 
-// Type for the Student with email field
 interface Student
   extends Omit<ClassStudent, "classId" | "enrollmentId" | "schoolYear"> {
   email: string;
 }
 
-// Extended ClassStudent type with a student prop
 const StudentDetails = ({ student }: { student: ClassStudent }) => {
-  const { classes } = useAppStore();
+  const classes = useQuery("classes:getClasses" as any) || [];
   const [formData, setFormData] = useState<Partial<Student>>({});
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<keyof Student, string>>
@@ -24,10 +22,7 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
 
   const studentIdRef = useRef<string | null>(null);
 
-  // Mock update function (replace with real API call)
   const updateStudent = async (updatedStudent: Partial<Student>) => {
-    // Replace this with your actual update function
-    // Simulate successful update
     return Promise.resolve();
   };
 
@@ -35,13 +30,11 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
     const hasStudentIdChanged = student.studentId !== studentIdRef.current;
 
     if (student) {
-      // Assume we fetch the complete student data including email
-      // In a real app, you might want to fetch this from an API
       setFormData({
         firstName: student.firstName,
         lastName: student.lastName,
         studentId: student.studentId,
-        email: "", // This should come from your backend/API
+        email: "",
       });
 
       if (hasStudentIdChanged) {
@@ -68,7 +61,6 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
     if (!student.studentId) return;
 
     const currentValue = formData[fieldName];
-    // For a new field like email that might not be in the original student object
     const originalValue = student[fieldName as keyof ClassStudent] || "";
 
     if (currentValue === originalValue) return;
@@ -112,9 +104,8 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
     }
   };
 
-  // Get all classes this student is enrolled in
   const studentClasses = classes.filter(
-    (classItem) => student.classId === classItem._id,
+    (classItem: any) => student.classId === classItem._id,
   );
 
   return (
@@ -216,14 +207,13 @@ const StudentDetails = ({ student }: { student: ClassStudent }) => {
           )}
         </div>
 
-        {/* Class Enrollments Section */}
         <div className="mt-6">
           <h3 className="text-lg font-medium text-gray-800 mb-4">
             Class Enrollments
           </h3>
           {studentClasses.length > 0 ? (
             <div className="border rounded-md divide-y">
-              {studentClasses.map((classItem) => (
+              {studentClasses.map((classItem: any) => (
                 <div
                   key={classItem._id}
                   className="p-3 flex justify-between items-center"

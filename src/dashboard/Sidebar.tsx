@@ -39,19 +39,22 @@ const Sidebar = ({ showSidebarIcons }: { showSidebarIcons: boolean }) => {
             <NavLink
               to={item.to}
               className={({ isActive }) =>
-                getListClasses(isActive, item.isDisabled)
+                getListClasses(isActive, (item as any).isDisabled)
               }
-              onClick={(e) => item.isDisabled && e.preventDefault()}
+              onClick={(e) => (item as any).isDisabled && e.preventDefault()}
             >
               {({ isActive }) => (
                 <>
                   <FontAwesomeIcon
                     icon={item.icon}
-                    className={getIconClasses(isActive, item.isDisabled)}
+                    className={getIconClasses(
+                      isActive,
+                      (item as any).isDisabled,
+                    )}
                   />
                   <span
                     className={` text-sm font-medium ${
-                      item.isDisabled && "opacity-50"
+                      (item as any).isDisabled && "opacity-50"
                     }`}
                   >
                     {item.name}

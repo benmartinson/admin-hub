@@ -17,7 +17,7 @@ const ClassStudents = ({
 }) => {
   const enrollments = useQuery("enrollments:getEnrollments" as any) || [];
   const classStudents = enrollments.filter(
-    (enrollment: ClassStudent) => enrollment.classId === classDetails._id
+    (enrollment: ClassStudent) => enrollment.classId === classDetails._id,
   );
   const removeEnrollmentMutation = useMutation(
     "enrollments:removeEnrollment" as any,
@@ -50,7 +50,7 @@ const ClassStudents = ({
 
   return (
     <div className="flex-grow overflow-y-auto px-4 pb-4 border-y border-slate-200">
-      {classStudents.map((enrollment) => (
+      {classStudents.map((enrollment: ClassStudent) => (
         <StudentInfo
           key={enrollment.studentId}
           student={enrollment}

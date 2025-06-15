@@ -1,9 +1,9 @@
-import { getClassStudents, useAppStore } from "@/appStore";
 import Modal from "@/common/components/Modal";
 import { ClassItem } from "@/types";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useQuery } from "convex/react";
 
 interface NewClassEnrollmentModalProps {
   isOpen: boolean;
@@ -16,12 +16,18 @@ const NewClassEnrollmentModal: React.FC<NewClassEnrollmentModalProps> = ({
   onClose,
   classDetails,
 }) => {
-  const students = useAppStore((state) => state.students);
-  const enrollments = getClassStudents(classDetails._id);
+  const students = useQuery("students:getStudents" as any) || [];
+  const enrollments = useQuery("enrollments:getEnrollments" as any) || [];
+
+  const classEnrollments = enrollments.filter(
+    (enrollment: any) => enrollment.classId === classDetails._id,
+  );
 
   const studentsNotEnrolled = students.filter(
-    (student) =>
-      !enrollments.some((enrollment) => enrollment.studentId === student._id),
+    (student: any) =>
+      !classEnrollments.some(
+        (enrollment: any) => enrollment.studentId === student._id,
+      ),
   );
   return (
     <Modal
@@ -31,7 +37,7 @@ const NewClassEnrollmentModal: React.FC<NewClassEnrollmentModalProps> = ({
     >
       <div className="py-2">
         <div className="h-64 overflow-y-auto space-y-2">
-          {studentsNotEnrolled.map((student) => (
+          {studentsNotEnrolled.map((student: any) => (
             <div
               key={student._id}
               className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors cursor-pointer"

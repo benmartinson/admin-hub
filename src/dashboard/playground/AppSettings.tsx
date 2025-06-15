@@ -82,8 +82,6 @@ const AppSettings = ({
         >
           {displaySettings
             .filter((setting) => setting.category === category)
-            .slice()
-            .reverse()
             .map((setting) => (
               <ToggleSetting
                 key={setting._id.toString()}
