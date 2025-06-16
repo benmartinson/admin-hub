@@ -53,7 +53,7 @@ const ViewPage = () => {
         toggleRefresh={toggleRefresh}
       />
 
-      <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-4 bg-[#fffef5] border-slate-200 w-10 h-full items-center text-slate-400">
+      <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-4 bg-[#fffef5] border-slate-200 w-10 max-w-10 min-w-10 h-full items-center text-slate-400">
         <FontAwesomeIcon
           icon={faMaximize}
           className={screenSizeClasses(selectedScreenSize === "maximize")}
