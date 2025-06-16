@@ -11,7 +11,6 @@ const TeacherInfo = ({
   onEdit: () => void;
   onRemove: () => void;
 }) => {
-  console.log({ teacher });
   return (
     <div className="bg-white flex items-center justify-between p-3 hover:bg-slate-50 transition-colors cursor-pointer border-b border-slate-200 h-14">
       <div className="flex items-center gap-3">

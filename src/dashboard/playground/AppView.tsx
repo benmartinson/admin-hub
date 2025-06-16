@@ -97,10 +97,18 @@ const AppView = ({
   const containerClasses = classNames(
     "flex h-screen min-h-[750px] w-full flex-3 border border-slate-200",
     {
-      "px-60 py-8 bg-slate-200":
+      "max-w-[400px]":
         selectedScreenSize === "mobile" && !iframeError && !isLoading,
       "bg-white": selectedScreenSize !== "mobile",
       "pt-10 justify-center": iframeError || isLoading,
+    },
+  );
+
+  const outerContainerClasses = classNames(
+    "w-full h-full border-0 bg-slate-200 flex justify-center items-center",
+    {
+      "pt-10 pb-20":
+        selectedScreenSize === "mobile" && !iframeError && !isLoading,
     },
   );
 
@@ -128,21 +136,23 @@ const AppView = ({
   }
 
   return (
-    <div className={containerClasses}>
-      <iframe
-        src={validatedUrl}
-        className={iframeClasses}
-        sandbox="allow-scripts allow-same-origin"
-        key={toggleRefresh}
-        title="lms"
-        onError={() => {
-          if (!iframeError) setIframeError(true);
-          setIsLoading(false);
-        }}
-        onLoad={() => {
-          setIsLoading(false);
-        }}
-      />
+    <div className={outerContainerClasses}>
+      <div className={containerClasses}>
+        <iframe
+          src={validatedUrl}
+          className={iframeClasses}
+          sandbox="allow-scripts allow-same-origin"
+          key={toggleRefresh}
+          title="lms"
+          onError={() => {
+            if (!iframeError) setIframeError(true);
+            setIsLoading(false);
+          }}
+          onLoad={() => {
+            setIsLoading(false);
+          }}
+        />
+      </div>
     </div>
   );
 };

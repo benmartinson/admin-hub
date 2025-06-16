@@ -71,23 +71,16 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
     }
 
     try {
+      let fieldValue = formData[fieldName];
+
+      if (fieldName === "startDate" || fieldName === "endDate") {
+        fieldValue = moment(fieldValue).format("YYYY-MM-DD");
+      }
+
       const payload = {
         _id: classId,
-        name: formData.name !== undefined ? formData.name : classDetails.name,
-        classCode:
-          formData.classCode !== undefined
-            ? formData.classCode
-            : classDetails.classCode,
-        startDate: moment(
-          formData.startDate !== undefined
-            ? formData.startDate
-            : classDetails.startDate,
-        ).format("YYYY-MM-DD"),
-        endDate: moment(
-          formData.endDate !== undefined
-            ? formData.endDate
-            : classDetails.endDate,
-        ).format("YYYY-MM-DD"),
+        field: fieldName,
+        value: fieldValue,
       };
 
       await updateClass(payload);
@@ -105,9 +98,13 @@ const ClassDetails = ({ classDetails }: { classDetails: ClassItem }) => {
       }, 2000);
     } catch (err) {
       console.error(`Failed to update ${fieldName}:`, err);
-      const errorMsg =
-        err instanceof Error ? err.message : `Failed to update ${fieldName}.`;
-      setFieldErrors((prev) => ({ ...prev, [fieldName]: errorMsg }));
+      setFieldErrors((prev) => ({
+        ...prev,
+        [fieldName]: "Something went wrong. Please try again.",
+      }));
+      setTimeout(() => {
+        setFieldErrors((prev) => ({ ...prev, [fieldName]: undefined }));
+      }, 5000);
     }
   };
 

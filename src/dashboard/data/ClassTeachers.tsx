@@ -19,7 +19,6 @@ const ClassTeachers = ({
     useQuery("teachers:getClassTeachers" as any, {
       classId: classDetails._id,
     }) || [];
-  console.log({ classTeachers, classDetailsId: classDetails._id });
   const removeClassTeacherMutation = useMutation(
     "teachers:removeClassTeacher" as any,
   );
