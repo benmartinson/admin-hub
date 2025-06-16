@@ -13,7 +13,7 @@ const EditSettingForm = ({
   onDelete: () => void;
 }) => {
   return (
-    <div className="w-96 border border-r-0 border-slate-200 bg-white p-4 shadow-md relative">
+    <div className="md:w-96 border md:border-r-0 max-md:w-full border-slate-200 bg-white p-4 shadow-md relative">
       <button
         onClick={closeForm}
         className="absolute top-4 right-4 text-slate-500 hover:text-slate-700 text-2xl font-bold"

@@ -2,7 +2,7 @@ import { useQuery } from "convex/react";
 import AppView from "./AppView";
 import { api } from "../../../convex/_generated/api";
 import AppSettingsContainer from "./AppSettingsContainer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   faArrowUpRightFromSquare,
   faExpand,
@@ -21,6 +21,24 @@ const ViewPage = () => {
   const appConfig = useQuery(api.appConfiguration.getAppConfiguration, {
     appId: 1,
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Tailwind's lg breakpoint is 1280px
+      if (window.innerWidth < 1280) {
+        setSelectedScreenSize("mobile");
+      }
+    };
+
+    // Check on mount
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (!appConfig) {
     return <div className="text-center text-slate-400 w-full mt-16"></div>;
@@ -43,7 +61,7 @@ const ViewPage = () => {
   };
 
   return (
-    <div className="flex" style={{ scrollbarWidth: "none" }}>
+    <div className="flex max-md:flex-col" style={{ scrollbarWidth: "none" }}>
       {selectedScreenSize !== "maximize" && (
         <AppSettingsContainer appConfig={appConfig} />
       )}
@@ -53,7 +71,7 @@ const ViewPage = () => {
         toggleRefresh={toggleRefresh}
       />
 
-      <div className="flex flex-col gap-8 text-2xl border-2 border-l-0 py-4 bg-[#fffef5] border-slate-200 w-10 max-w-10 min-w-10 h-full items-center text-slate-400">
+      <div className="max-md:hidden flex flex-col gap-8 text-2xl border-2 border-l-0 py-4 bg-[#fffef5] border-slate-200 w-10 max-w-10 min-w-10 h-full items-center text-slate-400">
         <FontAwesomeIcon
           icon={faMaximize}
           className={screenSizeClasses(selectedScreenSize === "maximize")}

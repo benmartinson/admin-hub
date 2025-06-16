@@ -75,7 +75,7 @@ const AppSettingsContainer = ({
   if (!fetchedAppSettings) {
     return (
       <div className="border border-r-0 border-slate-200 bg-white">
-        <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
+        <div className="md:w-96 border md:border-r-0 max-md:w-full border-slate-200 bg-white relative">
           <AppSettingHeader />
         </div>
       </div>
@@ -97,7 +97,7 @@ const AppSettingsContainer = ({
     );
     if (!setting) {
       return (
-        <div className="w-96 border border-r-0 border-slate-200 bg-white p-4">
+        <div className="md:w-96 border md:border-r-0 max-md:w-full border-slate-200 bg-white p-4">
           Setting not found
         </div>
       );

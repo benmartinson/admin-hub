@@ -71,7 +71,7 @@ const AppSettings = ({
   };
 
   return (
-    <div className="w-96 border border-r-0 border-slate-200 bg-white relative">
+    <div className="md:w-96 border md:border-r-0 max-md:w-full border-slate-200 bg-white relative">
       <AppSettingHeader />
       {uniqueCategories.map((category) => (
         <Category
